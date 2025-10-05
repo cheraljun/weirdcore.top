@@ -1,4 +1,27 @@
 /* 研究页面样式 */
+
+/* 搜索结果页样式 */
+.search-header {
+    padding: 15px 20px;
+    background: var(--white);
+    border-bottom: 2px solid var(--darkbrown);
+}
+
+.search-header h2 {
+    color: var(--darkbrown);
+}
+
+.search-header #search-keyword {
+    color: #e91e63;
+    font-weight: bold;
+}
+
+/* 搜索结果高亮 */
+mark {
+    background: #ffeb3b;
+    padding: 2px 4px;
+    font-weight: bold;
+}
 body {
     padding: 15px;
     display: block;

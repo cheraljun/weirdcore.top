@@ -85,7 +85,7 @@ async def health_check():
     return {"status": "ok"}
 
 # 导入API路由
-from backend.routers import auth, admin, public, upload
+from backend.routers import auth, admin, public, upload, search, chat, draft
 
 # 认证路由
 app.include_router(auth.router, prefix="/api/auth", tags=["认证"])
@@ -98,6 +98,15 @@ app.include_router(public.router, prefix="/api/content", tags=["公开内容"])
 
 # 文件上传路由
 app.include_router(upload.router, prefix="/api/upload", tags=["文件上传"])
+
+# 搜索路由
+app.include_router(search.router, prefix="/api", tags=["搜索"])
+
+# 聊天路由
+app.include_router(chat.router, prefix="/api/chat", tags=["聊天"])
+
+# 草稿路由
+app.include_router(draft.router, prefix="/api/draft", tags=["草稿"])
 
 def init_data_files():
     """初始化用户数据文件"""

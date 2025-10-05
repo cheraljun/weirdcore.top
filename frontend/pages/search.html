@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/research.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+<body style="margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column;">
+    <div style="padding: 15px; border-bottom: 2px solid var(--darkbrown); background: var(--white);">
+        <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">全局搜索</div>
+        <input type="text" id="search-input-page" 
+               placeholder="输入关键词进行搜索..." 
+               style="width: 100%; padding: 8px; border: 1px solid var(--darkbrown); font-size: 14px; font-family: inherit;"
+               autofocus />
+        <div id="search-stats" style="margin-top: 8px; color: #666; font-size: 12px;"></div>
+    </div>
+    
+    <div style="display: flex; flex: 1; overflow: hidden;">
+        <!-- 左侧分类导航 -->
+        <div id="category-nav" style="width: 200px; border-right: 2px solid var(--darkbrown); background: var(--white); overflow-y: auto;">
+            <!-- 分类列表 -->
+        </div>
+        
+        <!-- 右侧详情 -->
+        <div id="detail-panel" style="flex: 1; overflow-y: auto; background: #f9f9f9;">
+            <div style="padding: 30px; text-align: center; color: #999;">
+                请输入关键词开始搜索
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/pages/search.js"></script>
+</body>
+</html>

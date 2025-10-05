@@ -33,6 +33,9 @@
             <div class="nav-link">
                 <a href="#" class="link" data-window="chat">在线联络</a>
             </div>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索..." />
+            </div>
         </div>
     </div>
 
@@ -67,7 +70,7 @@
 
         <!-- 右侧内容区 -->
         <div class="right">
-            <div class="main-content">
+            <div class="main-content" id="main-content">
                 <div class="welcome">
                     <p><strong>欢迎来到 weirdcore store！</strong></p>
                     <p>这是一个记录生活、分享想法和兴趣的个人博客。</p>
@@ -75,6 +78,11 @@
                 <div class="updates">
                     <!-- 更新内容将通过JS动态加载 -->
                 </div>
+            </div>
+            
+            <!-- 搜索结果区域 -->
+            <div id="search-results-container" style="display: none;">
+                <!-- 搜索结果将在这里显示 -->
             </div>
         </div>
     </div>
@@ -122,7 +130,8 @@
                 'media': '媒体',
                 'activity': '活动',
                 'shop': '商店',
-                'chat': '在线联络'
+                'chat': '在线联络',
+                'search': '搜索结果'
             };
 
             const urls = {
@@ -130,7 +139,8 @@
                 'media': '/pages/media.html',
                 'activity': '/pages/activity.html',
                 'shop': '/pages/shop.html',
-                'chat': '/pages/chat.html'
+                'chat': '/pages/chat.html',
+                'search': '/pages/search.html'
             };
 
             const title = titles[type] || '窗口';
@@ -143,6 +153,167 @@
                 height: 600
             });
         }
+
+        // 搜索功能 - 实时搜索，不弹窗
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const mainContent = document.getElementById('main-content');
+            const searchResultsContainer = document.getElementById('search-results-container');
+            
+            let searchTimeout = null;
+            let currentKeyword = '';
+
+            async function performSearch() {
+                const keyword = searchInput.value.trim();
+                currentKeyword = keyword;
+                
+                if (!keyword) {
+                    // 清空搜索，显示主页
+                    mainContent.style.display = 'block';
+                    searchResultsContainer.style.display = 'none';
+                    return;
+                }
+
+                // 显示搜索结果区域
+                mainContent.style.display = 'none';
+                searchResultsContainer.style.display = 'block';
+                searchResultsContainer.innerHTML = '<div style="padding: 20px; text-align: center;">🔍 搜索中...</div>';
+
+                try {
+                    const response = await fetch(`/api/search?q=${encodeURIComponent(keyword)}`);
+                    const results = await response.json();
+                    
+                    // 确保这次搜索还是最新的
+                    if (keyword === currentKeyword) {
+                        renderSearchResults(results, keyword);
+                    }
+                } catch (error) {
+                    console.error('搜索失败:', error);
+                    searchResultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #f44336;">⚠️ 搜索失败</div>';
+                }
+            }
+
+            function renderSearchResults(results, keyword) {
+                const total = results.total;
+                
+                if (total === 0) {
+                    searchResultsContainer.innerHTML = `
+                        <div style="padding: 30px; text-align: center; color: #999;">
+                            <div style="font-size: 48px; margin-bottom: 15px;">🔍</div>
+                            <div>没有找到匹配 "${keyword}" 的内容</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const categoryNames = {
+                    research: '研究',
+                    media: '媒体',
+                    activity: '活动',
+                    shop: '商店'
+                };
+
+                const html = `
+                    <div style="padding: 20px;">
+                        <div style="margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--darkbrown);">
+                            <h2 style="margin: 0 0 10px 0;">搜索: <span style="color: #e91e63;">${escapeHtml(keyword)}</span></h2>
+                            <div style="color: #666;">找到 <strong style="color: #4caf50;">${total}</strong> 条结果</div>
+                        </div>
+                        
+                        ${Object.entries(categoryNames).map(([type, name]) => {
+                            const items = results[type];
+                            if (items.length === 0) return '';
+                            
+                            return `
+                                <div style="margin-bottom: 30px;">
+                                    <h3 style="margin: 0 0 15px 0; padding: 8px 12px; background: var(--darkbrown); color: var(--white);">
+                                        ${name} (${items.length})
+                                    </h3>
+                                    ${items.map(item => renderSearchItem(item, keyword)).join('')}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+
+                searchResultsContainer.innerHTML = html;
+            }
+
+            function renderSearchItem(item, keyword) {
+                const title = item.title || '无标题';
+                const content = item.content || '';
+                const excerpt = getExcerpt(content, keyword);
+                
+                return `
+                    <div style="
+                        background: var(--white);
+                        border: 1px solid var(--darkbrown);
+                        padding: 15px;
+                        margin-bottom: 10px;
+                        transition: 0.2s;
+                    " onmouseover="this.style.boxShadow='2px 2px 0 var(--darkbrown)'" 
+                       onmouseout="this.style.boxShadow='none'">
+                        <h4 style="margin: 0 0 10px 0; font-size: 16px;">
+                            ${highlightKeyword(escapeHtml(title), keyword)}
+                        </h4>
+                        <div style="color: #666; line-height: 1.6; margin-bottom: 10px;">
+                            ${highlightKeyword(excerpt, keyword)}
+                        </div>
+                        <div style="font-size: 12px; color: #999;">
+                            📅 ${formatDate(item.created_at)}
+                            ${item.images && item.images.length > 0 ? ` | 🖼️ ${item.images.length} 张图片` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            function getExcerpt(text, keyword) {
+                if (!text) return '';
+                
+                const lowerText = text.toLowerCase();
+                const lowerKeyword = keyword.toLowerCase();
+                const index = lowerText.indexOf(lowerKeyword);
+                
+                if (index === -1) {
+                    return escapeHtml(text.substring(0, 150)) + (text.length > 150 ? '...' : '');
+                }
+                
+                const start = Math.max(0, index - 60);
+                const end = Math.min(text.length, index + keyword.length + 60);
+                let excerpt = text.substring(start, end);
+                
+                if (start > 0) excerpt = '...' + excerpt;
+                if (end < text.length) excerpt = excerpt + '...';
+                
+                return escapeHtml(excerpt);
+            }
+
+            function highlightKeyword(text, keyword) {
+                const regex = new RegExp(`(${escapeRegex(keyword)})`, 'gi');
+                return text.replace(regex, '<mark style="background: #ffeb3b; padding: 1px 3px; font-weight: bold;">$1</mark>');
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function escapeRegex(str) {
+                return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('zh-CN');
+            }
+
+            // 实时搜索（防抖）
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(performSearch, 300);
+            });
+        });
     </script>
 </body>
 </html>

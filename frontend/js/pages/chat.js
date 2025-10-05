@@ -9,6 +9,7 @@ class ChatApp {
         this.userColors = new Map(); // 存储用户颜色映射
         this.colorIndex = 1;
         this.maxColors = 6;
+        this.pollInterval = null; // 轮询定时器
         
         this.initElements();
         this.bindEvents();
@@ -85,8 +86,8 @@ class ChatApp {
         this.showChatView();
         this.addSystemMessage(`${username} 加入了聊天室`);
         
-        // 保存到 localStorage
-        localStorage.setItem('chatUsername', username);
+        // 开始轮询新消息（每3秒检查一次）
+        this.startPolling();
     }
 
     handleLogout() {
@@ -97,8 +98,8 @@ class ChatApp {
         this.currentUser = null;
         this.showLoginView();
         
-        // 清除 localStorage
-        localStorage.removeItem('chatUsername');
+        // 停止轮询
+        this.stopPolling();
     }
 
     showLoginView() {
@@ -120,7 +121,7 @@ class ChatApp {
         this.messageInput.focus();
     }
 
-    sendMessage() {
+    async sendMessage() {
         const text = this.messageInput.value.trim();
         
         if (!text || !this.currentUser) {
@@ -130,15 +131,31 @@ class ChatApp {
         const message = {
             user: this.currentUser,
             text: text,
-            timestamp: new Date()
+            timestamp: new Date().toISOString()
         };
 
-        this.addMessage(message);
-        this.messageInput.value = '';
-        this.messageInput.focus();
-        
-        // 保存消息
-        this.saveMessages();
+        try {
+            // 发送到服务器
+            const response = await fetch('/api/chat/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message)
+            });
+
+            if (!response.ok) {
+                throw new Error('发送失败');
+            }
+
+            // 立即显示消息
+            this.addMessage(message);
+            this.messageInput.value = '';
+            this.messageInput.focus();
+        } catch (error) {
+            console.error('发送消息失败:', error);
+            alert('发送失败，请重试');
+        }
     }
 
     addMessage(message) {
@@ -197,36 +214,61 @@ class ChatApp {
         this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
     }
 
-    // 本地存储相关
-    saveMessages() {
+    // 服务器消息相关
+    async loadMessages() {
         try {
-            // 只保存最近50条消息
-            const recentMessages = this.messages.slice(-50);
-            localStorage.setItem('chatMessages', JSON.stringify(recentMessages));
+            const response = await fetch('/api/chat/messages');
+            const data = await response.json();
+            
+            this.messages = data.messages || [];
+            
+            // 清空容器
+            this.messagesContainer.innerHTML = '';
+            
+            // 渲染所有消息
+            this.messages.forEach(msg => {
+                this.renderMessage(msg);
+            });
+            
+            this.scrollToBottom();
         } catch (e) {
-            console.error('保存消息失败:', e);
+            console.error('加载消息失败:', e);
         }
     }
 
-    loadMessages() {
+    startPolling() {
+        // 每3秒检查新消息
+        this.pollInterval = setInterval(() => {
+            this.checkNewMessages();
+        }, 3000);
+    }
+
+    stopPolling() {
+        if (this.pollInterval) {
+            clearInterval(this.pollInterval);
+            this.pollInterval = null;
+        }
+    }
+
+    async checkNewMessages() {
         try {
-            // 加载保存的消息
-            const saved = localStorage.getItem('chatMessages');
-            if (saved) {
-                this.messages = JSON.parse(saved);
-                this.messages.forEach(msg => {
-                    msg.timestamp = new Date(msg.timestamp);
+            const response = await fetch('/api/chat/messages');
+            const data = await response.json();
+            
+            const serverMessages = data.messages || [];
+            
+            // 检查是否有新消息
+            if (serverMessages.length > this.messages.length) {
+                // 只渲染新消息
+                const newMessages = serverMessages.slice(this.messages.length);
+                newMessages.forEach(msg => {
                     this.renderMessage(msg);
                 });
-            }
-
-            // 检查是否有保存的用户名
-            const savedUsername = localStorage.getItem('chatUsername');
-            if (savedUsername) {
-                this.usernameInput.value = savedUsername;
+                this.messages = serverMessages;
+                this.scrollToBottom();
             }
         } catch (e) {
-            console.error('加载消息失败:', e);
+            console.error('检查新消息失败:', e);
         }
     }
 }

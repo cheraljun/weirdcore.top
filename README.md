@@ -22,14 +22,16 @@
 
 ### 后端
 - **FastAPI** - 现代化的 Python Web 框架
-- **SQLite** - 轻量级数据库（可选）
+- **JSON 文件存储** - 简单高效的数据存储（无需数据库）
 - **JWT** - JSON Web Token 认证
-- **Python 3.9+**
+- **Pillow** - 图片处理和 WebP 转换
+- **Python 3.8.10+** - 兼容 Python 3.8 及以上版本
 
 ### 前端
 - **原生 JavaScript** - ES6+ 模块化开发
 - **HTML5 + CSS3** - 语义化标签，Windows 98 风格
 - **组件化设计** - 可复用的 UI 组件
+- **模块化架构** - 基于类的页面管理系统
 
 ## 快速开始
 
@@ -86,23 +88,23 @@ weirdcore.top/
 │
 ├── backend/                 # 后端代码
 │   ├── main.py             # FastAPI 主应用
-│   ├── config.py           # 配置文件
-│   ├── database.py         # 数据库连接
-│   ├── models/             # 数据模型
 │   ├── routers/            # API 路由
 │   │   ├── auth.py         # 认证路由
-│   │   └── admin.py        # 管理员路由
+│   │   ├── admin.py        # 管理员内容管理路由
+│   │   ├── public.py       # 公开内容路由
+│   │   └── upload.py       # 图片上传路由
 │   ├── schemas/            # Pydantic 数据模式
 │   │   ├── auth.py         # 认证模式
 │   │   └── content.py      # 内容模式
 │   └── utils/              # 工具函数
 │       ├── auth.py         # JWT 认证工具
-│       └── file_storage.py # 文件存储工具
+│       └── file_storage.py # JSON 文件存储工具
 │
 ├── frontend/                # 前端代码
 │   ├── admin/              # 管理后台页面
 │   │   ├── login.html      # 登录页面
-│   │   └── index.html      # 管理后台首页
+│   │   ├── index.html      # 管理后台首页
+│   │   └── content.html    # 内容管理页面
 │   ├── pages/              # 用户页面
 │   │   ├── research.html   # 研究页面
 │   │   ├── media.html      # 媒体页面
@@ -119,25 +121,33 @@ weirdcore.top/
 │   ├── js/                 # JavaScript 文件
 │   │   ├── admin/          # 管理后台脚本
 │   │   │   ├── login.js    # 登录逻辑
-│   │   │   └── dashboard.js # 仪表板逻辑
+│   │   │   ├── dashboard.js # 仪表板逻辑
+│   │   │   └── content-new.js # 内容管理逻辑
 │   │   ├── pages/          # 页面脚本
 │   │   │   ├── chat.js     # 聊天页面逻辑
 │   │   │   ├── research.js # 研究页面逻辑
 │   │   │   ├── media.js    # 媒体页面逻辑
 │   │   │   ├── activity.js # 活动页面逻辑
 │   │   │   └── shop.js     # 商店页面逻辑
-│   │   ├── components/     # 组件
-│   │   │   └── window-manager.js # Windows 98 窗口管理器
-│   │   ├── api/            # API 客户端
-│   │   │   └── client.js   # API 调用封装
+│   │   ├── components/     # 可复用组件
+│   │   │   ├── window-manager.js # Windows 98 窗口管理器
+│   │   │   ├── ContentCard.js    # 内容卡片组件
+│   │   │   ├── EmptyState.js     # 空状态组件
+│   │   │   └── ImageUploader.js  # 图片上传组件
+│   │   ├── core/           # 核心基类
+│   │   │   ├── ContentPageBase.js      # 用户页面基类
+│   │   │   └── AdminContentPageBase.js # 管理页面基类
+│   │   ├── utils/          # 工具函数
+│   │   │   ├── apiClient.js    # API 客户端
+│   │   │   └── htmlHelpers.js  # HTML 辅助函数
+│   │   ├── config/         # 配置
+│   │   │   └── pageConfigs.js  # 页面配置
 │   │   └── main.js         # 全局入口
-│   └── media/              # 媒体文件
-│       ├── images/         # 图片
-│       ├── audio/          # 音频
-│       └── videos/         # 视频
+│   └── index.html          # 网站首页
 │
 ├── requirements.txt         # Python 依赖
-├── .gitignore              # Git 忽略文件
+├── ARCHITECTURE.md          # 架构文档
+├── STORAGE_STRUCTURE.md     # 数据存储结构说明
 └── README.md               # 项目文档
 ```
 

@@ -109,6 +109,7 @@ body {
     display: flex;
     position: sticky;
     top: 0px;
+    align-items: stretch;
 }
 
 .right-header .nav-link {
@@ -386,5 +387,37 @@ a.dropdown-link:hover {
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
     background: #000;
+}
+
+/* 搜索框样式 */
+.search-box {
+    display: flex;
+    align-items: center;
+    border-right: 1px dotted var(--darkbrown);
+    border-bottom: 1px dotted var(--darkbrown);
+    padding: 3px 8px;
+    background: var(--white);
+    min-width: 180px;
+}
+
+.search-box input {
+    flex: 1;
+    border: 1px solid var(--darkbrown);
+    padding: 4px 8px;
+    font-family: inherit;
+    font-size: 13px;
+    background: var(--white);
+    color: var(--darkbrown);
+    transition: 0.2s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border: 2px solid var(--darkbrown);
+    padding: 3px 7px;
+}
+
+.search-box input::placeholder {
+    color: #999;
 }
 

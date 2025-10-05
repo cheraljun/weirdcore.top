@@ -16,6 +16,8 @@ export class AdminContentPageBase {
         this.posts = [];
         this.editingPostId = null;
         this.imageUploader = null;
+        this.draftTimer = null; // 草稿自动保存定时器
+        this.isEditorDirty = false; // 编辑器是否有未保存的修改
 
         // 检查登录状态
         if (!this.token) {
@@ -135,14 +137,16 @@ export class AdminContentPageBase {
     }
 
     /**
-     * 加载内容
+     * 加载内容（从草稿加载）
      */
     async loadContent() {
         this.showLoading(true);
         this.hideError();
         
         try {
-            this.posts = await api.get(`/admin/${this.currentType}`, { auth: true });
+            // 从草稿加载内容
+            this.posts = await api.get(`/draft/${this.currentType}`, { auth: true });
+            this.posts = this.posts.posts || [];
             this.render();
         } catch (error) {
             console.error('加载内容失败:', error);
@@ -207,6 +211,7 @@ export class AdminContentPageBase {
      */
     openEditor(post = null) {
         this.editingPostId = post ? post.id : null;
+        this.isEditorDirty = false;
         
         if (post) {
             // 编辑模式
@@ -232,19 +237,77 @@ export class AdminContentPageBase {
         
         this.editorOverlay.classList.add('show');
         this.postContent.focus();
+        
+        // 开始自动保存草稿
+        this.startDraftAutoSave();
+        
+        // 监听编辑器内容变化
+        this.watchEditorChanges();
     }
 
     /**
      * 关闭编辑器
      */
-    closeEditor() {
+    async closeEditor() {
+        // 停止自动保存
+        this.stopDraftAutoSave();
+        
+        // 如果有未保存的修改，弹窗确认
+        if (this.isEditorDirty) {
+            const shouldSave = confirm('是否保存草稿？\n\n选择"确定"保存草稿，下次可继续编辑。\n选择"取消"放弃本次修改。');
+            
+            if (shouldSave) {
+                // 保存草稿
+                await this.saveDraft();
+            }
+        }
+        
         this.editorOverlay.classList.remove('show');
         this.contentForm.reset();
         this.editingPostId = null;
+        this.isEditorDirty = false;
     }
 
     /**
-     * 保存内容
+     * 保存草稿（自动保存）
+     */
+    async saveDraft() {
+        try {
+            // 保存当前所有内容（包括正在编辑的）到草稿
+            const draftData = { posts: [...this.posts] };
+            
+            // 获取当前编辑的内容
+            const currentData = {
+                id: this.postId.value || this.generateId(),
+                title: this.postTitle.value.trim() || null,
+                content: this.postContent.value.trim(),
+                images: this.imageUploader.getUploadedImages(),
+                links: [],
+                status: this.postStatus.value,
+                type: this.currentType,
+                author: 'Admin',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            };
+            
+            // 更新或添加到草稿中
+            const index = draftData.posts.findIndex(p => p.id === currentData.id);
+            if (index >= 0) {
+                draftData.posts[index] = currentData;
+            } else {
+                draftData.posts.unshift(currentData);
+            }
+            
+            // 保存草稿到服务器
+            await api.post(`/draft/${this.currentType}`, draftData, { auth: true });
+            console.log('✅ 草稿已自动保存');
+        } catch (error) {
+            console.error('保存草稿失败:', error);
+        }
+    }
+
+    /**
+     * 发布内容（将草稿复制到正文）
      */
     async saveContent() {
         const title = this.postTitle.value.trim();
@@ -257,34 +320,78 @@ export class AdminContentPageBase {
         }
 
         this.saveBtn.disabled = true;
-        this.saveBtn.textContent = '保存中...';
+        this.saveBtn.textContent = '发布中...';
 
         try {
-            const data = {
-                title: title || null,
-                content: content,
-                images: this.imageUploader.getUploadedImages(), // 获取上传的图片
-                links: [],
-                status: status
-            };
-
-            if (this.editingPostId) {
-                // 更新
-                await api.put(`/admin/${this.currentType}/${this.editingPostId}`, data, { auth: true });
-            } else {
-                // 创建
-                await api.post(`/admin/${this.currentType}`, data, { auth: true });
-            }
-
-            this.closeEditor();
+            // 先保存当前编辑到草稿
+            await this.saveDraft();
+            
+            // 然后发布草稿到正文
+            await api.post(`/draft/${this.currentType}/publish`, {}, { auth: true });
+            
+            // 停止自动保存
+            this.stopDraftAutoSave();
+            this.isEditorDirty = false;
+            
+            this.editorOverlay.classList.remove('show');
+            this.contentForm.reset();
+            this.editingPostId = null;
+            
+            alert('发布成功！');
             this.loadContent();
         } catch (error) {
-            console.error('保存失败:', error);
-            alert('保存失败: ' + error.message);
+            console.error('发布失败:', error);
+            alert('发布失败: ' + error.message);
         } finally {
             this.saveBtn.disabled = false;
             this.saveBtn.textContent = '保存';
         }
+    }
+
+    /**
+     * 开始自动保存草稿
+     */
+    startDraftAutoSave() {
+        // 每10秒自动保存
+        this.draftTimer = setInterval(() => {
+            if (this.isEditorDirty) {
+                this.saveDraft();
+            }
+        }, 10000);
+    }
+
+    /**
+     * 停止自动保存草稿
+     */
+    stopDraftAutoSave() {
+        if (this.draftTimer) {
+            clearInterval(this.draftTimer);
+            this.draftTimer = null;
+        }
+    }
+
+    /**
+     * 监听编辑器内容变化
+     */
+    watchEditorChanges() {
+        const markDirty = () => {
+            this.isEditorDirty = true;
+        };
+        
+        this.postTitle.removeEventListener('input', markDirty);
+        this.postContent.removeEventListener('input', markDirty);
+        this.postStatus.removeEventListener('change', markDirty);
+        
+        this.postTitle.addEventListener('input', markDirty);
+        this.postContent.addEventListener('input', markDirty);
+        this.postStatus.addEventListener('change', markDirty);
+    }
+
+    /**
+     * 生成唯一ID
+     */
+    generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
 
     /**
