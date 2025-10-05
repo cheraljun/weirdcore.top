@@ -12,28 +12,28 @@ export const USER_PAGE_CONFIGS = {
         containerId: 'posts-container',
         emptyIcon: '📝',
         emptyTitle: '暂无文章',
-        emptyMessage: '文章内容将通过管理后台添加'
+        emptyMessage: ''
     },
     media: {
         type: 'media',
         containerId: 'media-container',
         emptyIcon: '🎬',
         emptyTitle: '暂无内容',
-        emptyMessage: '媒体内容将通过管理后台添加'
+        emptyMessage: ''
     },
     activity: {
         type: 'activity',
         containerId: 'activity-container',
         emptyIcon: '📅',
         emptyTitle: '暂无活动记录',
-        emptyMessage: '活动记录将通过管理后台添加'
+        emptyMessage: ''
     },
     shop: {
         type: 'shop',
         containerId: 'shop-container',
         emptyIcon: '🛒',
         emptyTitle: '暂无商品',
-        emptyMessage: '商品信息将通过管理后台添加'
+        emptyMessage: ''
     }
 };
 

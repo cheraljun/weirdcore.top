@@ -9,77 +9,76 @@
     <link rel="stylesheet" href="/css/windows98.css">
 </head>
 <body>
-    <div style="text-align: center; padding: 20px 0; border-bottom: 2px solid #000;">
-        <h1 style="font-size: 2em; margin: 0;">weirdcore store</h1>
+    <!-- 顶部书籍滚动条 -->
+    <div class="book-scroll-container">
+        <div class="book-scroll-content" id="book-scroll-content">
+            加载中...
+        </div>
     </div>
-    
+
     <div class="header">
         <div class="left-header">
-            <span style="font-weight: bold;">weirdcore store</span> ----------→ <span style="cursor: pointer;">♕</span>
+            <div class="doge-container">
+                <img src="/images/doge.gif" alt="Doge" class="doge-gif">
+            </div>
+            <div class="player-controls">
+                <button id="play-btn" class="player-btn" title="播放">
+                    <img src="/images/play.png" alt="播放">
+                </button>
+                <button id="pause-btn" class="player-btn" title="暂停" style="display: none;">
+                    <img src="/images/pause.png" alt="暂停">
+                </button>
+            </div>
         </div>
         <div class="right-header">
             <div class="nav-link">
-                <a href="#" class="link" data-window="research">研究</a>
+                <a href="#" class="link" data-window="research">
+                    <img src="/images/nav-research.png" alt="研究" class="nav-icon">
+                </a>
             </div>
             <div class="nav-link">
-                <a href="#" class="link" data-window="media">媒体</a>
+                <a href="#" class="link" data-window="media">
+                    <img src="/images/nav-media.png" alt="媒体" class="nav-icon">
+                </a>
             </div>
             <div class="nav-link">
-                <a href="#" class="link" data-window="activity">活动</a>
+                <a href="#" class="link" data-window="activity">
+                    <img src="/images/nav-activity.png" alt="活动" class="nav-icon">
+                </a>
             </div>
             <div class="nav-link">
-                <a href="#" class="link" data-window="shop">商店</a>
+                <a href="#" class="link" data-window="shop">
+                    <img src="/images/nav-shop.png" alt="商店" class="nav-icon">
+                </a>
             </div>
             <div class="nav-link">
-                <a href="#" class="link" data-window="chat">在线联络</a>
-            </div>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="搜索..." />
+                <a href="#" class="link" data-window="chat">
+                    <img src="/images/nav-chat.png" alt="留言" class="nav-icon">
+                </a>
             </div>
         </div>
     </div>
+    
+    <!-- 音频播放器（隐藏） -->
+    <audio id="radio-player" preload="none">
+        <source src="https://n10as.radiocult.fm/stream" type="audio/mpeg">
+    </audio>
 
     <div class="content">
-        <!-- 左侧边栏 -->
+        <!-- 左侧边栏 - 搜索框 + 公告栏 -->
         <div class="left">
-            <!-- 当前日期 -->
-            <div id="datetime-display" style="background: var(--white); padding: 15px; text-align: left; border-bottom: 1px dotted var(--darkbrown);">
-                <div id="current-date" style="font-size: 16px; font-weight: bold; margin-bottom: 8px;"></div>
-                <div id="current-weekday" style="font-size: 14px; color: #666;"></div>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索..." />
             </div>
-
-            <!-- 联系方式 -->
-            <div class="button">
-                <div class="link-me">联系我：</div>
-                <div style="text-align: center; padding: 10px 5px;">
-                    <a href="mailto:1773384983@qq.com" style="text-decoration: none; word-break: break-all;">1773384983@qq.com</a>
-                </div>
-            </div>
-
-            <!-- Neighbors -->
-            <div class="neighbors">
-                <div class="neighbors-title">友情链接</div>
-                <div class="neighbors-buttons" id="neighbors-buttons">
-                    <div style="padding: 10px; border-bottom: 1px dotted var(--darkbrown);">
-                        <a href="http://vocabulary.top" target="_blank" style="font-weight: bold; display: block; margin-bottom: 5px;">vocabulary.top</a>
-                        <div style="font-size: 12px; color: #666;">最好的单词记忆小站</div>
-                    </div>
+            <div class="announcement-board">
+                <div class="announcement-content" id="announcement-content">
+                    加载中...
                 </div>
             </div>
         </div>
 
         <!-- 右侧内容区 -->
         <div class="right">
-            <div class="main-content" id="main-content">
-                <div class="welcome">
-                    <p><strong>欢迎来到 weirdcore store！</strong></p>
-                    <p>这是一个记录生活、分享想法和兴趣的个人博客。</p>
-                </div>
-                <div class="updates">
-                    <!-- 更新内容将通过JS动态加载 -->
-                </div>
-            </div>
-            
             <!-- 搜索结果区域 -->
             <div id="search-results-container" style="display: none;">
                 <!-- 搜索结果将在这里显示 -->
@@ -90,24 +89,80 @@
     <script type="module" src="/js/components/window-manager.js"></script>
     <script type="module" src="/js/main.js"></script>
     
-    <!-- 当前日期脚本 -->
+    <!-- 公告栏加载脚本 -->
     <script>
-        function updateDate() {
-            const now = new Date();
+        async function loadAnnouncement() {
+            const announcementContent = document.getElementById('announcement-content');
+            try {
+                const response = await fetch('/api/announcement');
+                const data = await response.json();
+                
+                // 清空内容
+                announcementContent.innerHTML = '';
+                
+                // 检查是否有内容
+                if (!data.items || data.items.length === 0) {
+                    announcementContent.textContent = '暂无公告';
+                    return;
+                }
+                
+                // 渲染每个项目
+                data.items.forEach(item => {
+                    if (item.type === 'text') {
+                        // 渲染文字，按行分割
+                        const lines = item.content.split('\n');
+                        lines.forEach(line => {
+                            const p = document.createElement('p');
+                            p.style.margin = '0 0 var(--content-gap) 0';
+                            p.style.textAlign = 'left';
+                            p.style.wordWrap = 'break-word';
+                            p.style.overflowWrap = 'break-word';
+                            p.textContent = line || '\u00A0'; // 空行保留
+                            announcementContent.appendChild(p);
+                        });
+                    } else if (item.type === 'image') {
+                        // 渲染图片
+                        const img = document.createElement('img');
+                        img.src = item.content;
+                        img.alt = '公告图片';
+                        img.style.maxWidth = '100%';
+                        img.style.height = 'auto';
+                        img.style.display = 'block';
+                        img.style.margin = 'var(--content-gap) 0';
+                        announcementContent.appendChild(img);
+                    }
+                });
+                
+            } catch (error) {
+                console.error('加载公告失败:', error);
+                announcementContent.textContent = '加载失败';
+            }
+        }
+        loadAnnouncement();
+    </script>
+
+    <!-- 书籍滚动条脚本 -->
+    <script>
+        async function loadBookContent() {
+            const bookScrollContent = document.getElementById('book-scroll-content');
             
-            // 格式化日期：2025年10月5日
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const date = now.getDate();
-            document.getElementById('current-date').textContent = `${year}年${month}月${date}日`;
-            
-            // 星期几
-            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-            document.getElementById('current-weekday').textContent = weekdays[now.getDay()];
+            try {
+                const response = await fetch('/api/book/content');
+                const data = await response.json();
+                
+                if (data.content) {
+                    // 设置内容（不重复，让CSS动画无限循环）
+                    bookScrollContent.textContent = data.content + ' ◆◆◆ ';
+                    bookScrollContent.classList.add('scrolling');
+                } else {
+                    bookScrollContent.textContent = '';
+                }
+            } catch (error) {
+                bookScrollContent.textContent = '';
+            }
         }
         
-        // 页面加载后立即显示
-        updateDate();
+        loadBookContent();
     </script>
     
     <script type="module">
@@ -130,7 +185,7 @@
                 'media': '媒体',
                 'activity': '活动',
                 'shop': '商店',
-                'chat': '在线联络',
+                'chat': '留言',
                 'search': '搜索结果'
             };
 
@@ -157,7 +212,6 @@
         // 搜索功能 - 实时搜索，不弹窗
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('search-input');
-            const mainContent = document.getElementById('main-content');
             const searchResultsContainer = document.getElementById('search-results-container');
             
             let searchTimeout = null;
@@ -166,18 +220,19 @@
             async function performSearch() {
                 const keyword = searchInput.value.trim();
                 currentKeyword = keyword;
+                const rightPanel = document.querySelector('.right');
                 
                 if (!keyword) {
-                    // 清空搜索，显示主页
-                    mainContent.style.display = 'block';
+                    // 清空搜索，隐藏右侧面板
                     searchResultsContainer.style.display = 'none';
+                    rightPanel.classList.remove('has-content');
                     return;
                 }
 
                 // 显示搜索结果区域
-                mainContent.style.display = 'none';
                 searchResultsContainer.style.display = 'block';
-                searchResultsContainer.innerHTML = '<div style="padding: 20px; text-align: center;">🔍 搜索中...</div>';
+                rightPanel.classList.add('has-content');
+                searchResultsContainer.innerHTML = '<div style="padding: var(--content-padding); text-align: center; color: var(--win98-black);">🔍 搜索中...</div>';
 
                 try {
                     const response = await fetch(`/api/search?q=${encodeURIComponent(keyword)}`);
@@ -198,8 +253,8 @@
                 
                 if (total === 0) {
                     searchResultsContainer.innerHTML = `
-                        <div style="padding: 30px; text-align: center; color: #999;">
-                            <div style="font-size: 48px; margin-bottom: 15px;">🔍</div>
+                        <div style="padding: var(--section-gap) var(--content-padding); text-align: center; color: var(--win98-black);">
+                            <div style="font-size: 2rem; margin-bottom: var(--content-padding);">🔍</div>
                             <div>没有找到匹配 "${keyword}" 的内容</div>
                         </div>
                     `;
@@ -214,10 +269,10 @@
                 };
 
                 const html = `
-                    <div style="padding: 20px;">
-                        <div style="margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--darkbrown);">
-                            <h2 style="margin: 0 0 10px 0;">搜索: <span style="color: #e91e63;">${escapeHtml(keyword)}</span></h2>
-                            <div style="color: #666;">找到 <strong style="color: #4caf50;">${total}</strong> 条结果</div>
+                    <div style="padding: 0;">
+                        <div style="margin-bottom: var(--section-gap); padding-bottom: var(--content-gap); border-bottom: 2px solid var(--win98-dark-gray);">
+                            <h2 style="margin: 0 0 var(--content-gap) 0; font-size: 1.07rem; color: var(--win98-black);">搜索: <span style="color: var(--win98-black);">${escapeHtml(keyword)}</span></h2>
+                            <div style="color: var(--win98-black); font-size: 0.93rem;">找到 <strong>${total}</strong> 条结果</div>
                         </div>
                         
                         ${Object.entries(categoryNames).map(([type, name]) => {
@@ -225,8 +280,8 @@
                             if (items.length === 0) return '';
                             
                             return `
-                                <div style="margin-bottom: 30px;">
-                                    <h3 style="margin: 0 0 15px 0; padding: 8px 12px; background: var(--darkbrown); color: var(--white);">
+                                <div style="margin-bottom: var(--section-gap);">
+                                    <h3 style="margin: 0 0 var(--content-padding) 0; padding: var(--content-gap) 0; color: var(--win98-black); font-size: 0.93rem; font-weight: bold;">
                                         ${name} (${items.length})
                                     </h3>
                                     ${items.map(item => renderSearchItem(item, keyword)).join('')}
@@ -246,20 +301,18 @@
                 
                 return `
                     <div style="
-                        background: var(--white);
-                        border: 1px solid var(--darkbrown);
-                        padding: 15px;
-                        margin-bottom: 10px;
-                        transition: 0.2s;
-                    " onmouseover="this.style.boxShadow='2px 2px 0 var(--darkbrown)'" 
-                       onmouseout="this.style.boxShadow='none'">
-                        <h4 style="margin: 0 0 10px 0; font-size: 16px;">
+                        background: transparent;
+                        border-bottom: 1px solid var(--win98-dark-gray);
+                        padding: var(--content-padding) 0;
+                        margin-bottom: var(--content-padding);
+                    ">
+                        <h4 style="margin: 0 0 var(--content-gap) 0; font-size: 1rem; font-weight: bold; color: var(--win98-black);">
                             ${highlightKeyword(escapeHtml(title), keyword)}
                         </h4>
-                        <div style="color: #666; line-height: 1.6; margin-bottom: 10px;">
+                        <div style="color: var(--win98-black); line-height: 1.6; margin-bottom: var(--content-gap); font-size: 0.93rem;">
                             ${highlightKeyword(excerpt, keyword)}
                         </div>
-                        <div style="font-size: 12px; color: #999;">
+                        <div style="font-size: 0.86rem; color: var(--win98-black);">
                             📅 ${formatDate(item.created_at)}
                             ${item.images && item.images.length > 0 ? ` | 🖼️ ${item.images.length} 张图片` : ''}
                         </div>

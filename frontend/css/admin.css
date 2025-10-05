@@ -1,10 +1,11 @@
-/* 管理后台专用样式 */
+/* 管理后台专用样式 - Windows 98 风格 */
 
 /* 空状态 */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
-    color: #666;
+    color: var(--win98-black);
+    background-color: var(--win98-white);
 }
 
 .empty-state p {
@@ -20,25 +21,33 @@
 
 /* 错误消息 */
 .error-message {
-    padding: 15px;
-    background-color: #f8d7da;
-    border: 2px solid #c00;
-    color: #721c24;
-    margin-bottom: 20px;
+    padding: 8px;
+    background-color: var(--win98-white);
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-black);
+    border-bottom: 2px solid var(--win98-black);
+    color: #c00;
+    margin-bottom: 10px;
 }
 
 /* 内容卡片 */
 .content-item {
-    border: 2px solid var(--darkbrown);
-    padding: 20px;
-    background-color: var(--white);
-    transition: all 0.2s;
-    margin-bottom: 15px;
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-dark-gray);
+    border-bottom: 2px solid var(--win98-dark-gray);
+    padding: 10px;
+    background-color: var(--win98-gray);
+    transition: none;
+    margin-bottom: 10px;
 }
 
 .content-item:hover {
-    box-shadow: 4px 4px 0px var(--darkbrown);
-    transform: translate(-2px, -2px);
+    border-top: 3px solid var(--win98-white);
+    border-left: 3px solid var(--win98-white);
+    border-right: 3px solid var(--win98-black);
+    border-bottom: 3px solid var(--win98-black);
 }
 
 .content-item-header {
@@ -49,13 +58,13 @@
 }
 
 .content-item-meta {
-    font-size: 12px;
-    color: #666;
+    font-size: 0.86rem;
+    color: var(--win98-black);
 }
 
 .content-item-actions {
     display: flex;
-    gap: 10px;
+    gap: 0.7rem;
 }
 
 .content-item-body {
@@ -64,35 +73,39 @@
 
 .content-item-title {
     font-weight: bold;
-    font-size: 16px;
-    margin: 0 0 10px 0;
+    font-size: 1.14rem;
+    margin: 0 0 0.7rem 0;
 }
 
 .content-item-text {
-    color: #333;
+    color: var(--win98-black);
+    background-color: var(--win98-white);
+    padding: 0.29rem;
 }
 
 /* 内容图片 */
 .content-images {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-    margin-top: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(10.71rem, 1fr));
+    gap: 0.57rem;
+    margin-top: 0.7rem;
 }
 
 .content-image {
     width: 100%;
-    height: 150px;
+    height: 10.71rem;
     object-fit: cover;
-    border: 2px solid var(--darkbrown);
-    opacity: 0;
-    transition: opacity 0.3s;
+    border-top: 2px solid var(--win98-dark-gray);
+    border-left: 2px solid var(--win98-dark-gray);
+    border-right: 2px solid var(--win98-white);
+    border-bottom: 2px solid var(--win98-white);
+    opacity: 1;
+    transition: none;
 }
 
 .content-image:hover {
-    opacity: 0.8;
-}
-
-.content-image[src] {
-    opacity: 1;
+    border-top: 2px solid var(--win98-black);
+    border-left: 2px solid var(--win98-black);
+    border-right: 2px solid var(--win98-light-gray);
+    border-bottom: 2px solid var(--win98-light-gray);
 }

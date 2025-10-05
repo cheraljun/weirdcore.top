@@ -31,9 +31,6 @@ class ChatApp {
         this.messageInput = document.getElementById('message-input');
         this.sendBtn = document.getElementById('send-btn');
         this.chatStatus = document.getElementById('chat-status');
-        
-        // 标签页
-        this.tabs = document.querySelectorAll('.chat-tab');
     }
 
     bindEvents() {
@@ -58,14 +55,6 @@ class ChatApp {
                 e.preventDefault();
                 this.sendMessage();
             }
-        });
-
-        // 标签页切换（仅UI效果）
-        this.tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                this.tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-            });
         });
     }
 
@@ -106,7 +95,7 @@ class ChatApp {
         this.loginView.classList.remove('hidden');
         this.chatView.classList.add('hidden');
         this.logoutBtn.style.display = 'none';
-        this.chatStatus.textContent = 'Log in to chat';
+        this.chatStatus.textContent = '请登录以开始聊天';
         this.chatStatus.className = 'chat-status';
         this.usernameInput.value = '';
         this.usernameInput.focus();
@@ -117,7 +106,7 @@ class ChatApp {
         this.chatView.classList.remove('hidden');
         this.logoutBtn.style.display = 'inline-block';
         this.chatStatus.textContent = `已登录: ${this.currentUser}`;
-        this.chatStatus.className = 'chat-status online';
+        this.chatStatus.className = 'chat-status connected';
         this.messageInput.focus();
     }
 

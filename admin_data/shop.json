@@ -1,18 +1,18 @@
 {
   "posts": [
     {
-      "id": "mgdc0a387n362l2bc7n",
+      "id": "mgdjoq6m1zlfue0n2hoj",
       "title": "拖鞋",
-      "content": "怪核拖鞋即将上架！",
+      "content": "拖鞋准备上架啦",
       "images": [
-        "/media/images/5dc969b2e95d4766b346679fba981ea3.webp"
+        "/media/images/450e0c67aff5476d9f39827e4571f550.webp"
       ],
       "links": [],
       "status": "published",
       "type": "shop",
       "author": "Admin",
-      "created_at": "2025-10-05T06:39:16.244Z",
-      "updated_at": "2025-10-05T06:39:16.244Z"
+      "created_at": "2025-10-05T10:14:14.158Z",
+      "updated_at": "2025-10-05T10:14:14.158Z"
     }
   ]
 }

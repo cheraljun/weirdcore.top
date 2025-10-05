@@ -1,36 +1,81 @@
-/* 全局样式变量和基础样式 */
+/* 全局样式变量和基础样式 - Windows 98 配色 */
 :root {
-    --darkbrown: #190503;
-    --white: #f5e8e7;
+    /* Windows 98 经典配色 */
+    --win98-teal: #008080;          /* 桌面背景 */
+    --win98-gray: #c0c0c0;          /* 窗口背景/按钮面 */
+    --win98-blue: #000080;          /* 标题栏/选中背景 */
+    --win98-light-blue: #1084d0;    /* 标题栏渐变 */
+    --win98-white: #ffffff;         /* 白色/高光 */
+    --win98-black: #000000;         /* 黑色/文字 */
+    --win98-dark-gray: #808080;     /* 深灰/阴影 */
+    --win98-light-gray: #dfdfdf;    /* 浅灰 */
+    
+    /* 统一间距系统 - 修改这里可以全局调整间距 */
+    --content-padding: 0.7rem;      /* 内容区域统一内边距 */
+    --content-gap: 0.57rem;         /* 元素之间的间隙 */
+    --section-gap: 1.07rem;         /* 大区块之间的间隙 */
+    
+    /* 向后兼容的别名 */
+    --darkbrown: #000080;
+    --white: #c0c0c0;
 }
 
 html {
-    background-color: var(--white);
-    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
-    font-size: 14px;
-    color: var(--darkbrown);
+    background: url('../images/background.webp') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+    /* 基础字体大小 - 调整这个值可以整体放大/缩小所有内容 
+       14px = 默认大小
+       21px = 1.5倍
+       28px = 2倍 (当前设置)
+    */
+    font-size: 28px;
+    color: var(--win98-black);
     image-rendering: pixelated;
 }
 
+body {
+    background: url('../images/background.webp') no-repeat center center fixed;
+    background-size: cover;
+    font-size: 1rem;
+}
+
 ::selection {
-    background-color: var(--darkbrown);
-    color: var(--white);
+    background-color: var(--win98-blue);
+    color: var(--win98-white);
 }
 
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--win98-gray);
 }
 
 ::-webkit-scrollbar-thumb {
-    border: 1px dotted var(--darkbrown);
-    -webkit-transition: 0.25s;
-    transition: 0.25s;
+    background-color: var(--win98-gray);
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-dark-gray);
+    border-bottom: 2px solid var(--win98-dark-gray);
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--darkbrown);
-    -webkit-transition: 0.25s;
-    transition: 0.25s;
+    background-color: var(--win98-light-gray);
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
+}
+
+::-webkit-scrollbar-button {
+    background-color: var(--win98-gray);
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-dark-gray);
+    border-bottom: 2px solid var(--win98-dark-gray);
 }
 
 p {
@@ -40,13 +85,13 @@ p {
 /* ASCII艺术头部样式 */
 .ascii-header {
     font-family: monospace;
-    font-size: 10px;
+    font-size: 0.7rem;
     line-height: 1.2;
     text-align: center;
     color: var(--darkbrown);
     background-color: var(--white);
-    padding: 10px 0;
-    margin: 0 0 20px 0;
+    padding: 0.7rem 0;
+    margin: 0 0 1.4rem 0;
     overflow-x: auto;
     white-space: pre;
     display: block;
@@ -54,15 +99,19 @@ p {
 }
 
 a {
-    color: var(--darkbrown);
-    text-decoration: 1px dotted underline;
-    -webkit-transition: 0.25s;
-    transition: 0.25s;
+    color: var(--win98-blue);
+    text-decoration: underline;
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
 }
 
 a:hover {
-    opacity: 70%;
-    -webkit-transition: 0.25s;
-    transition: 0.25s;
+    color: #0000ff;
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
+}
+
+a:visited {
+    color: #800080;
 }
 

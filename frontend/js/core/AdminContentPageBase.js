@@ -413,8 +413,19 @@ export class AdminContentPageBase {
         }
 
         try {
-            await api.delete(`/admin/${this.currentType}/${postId}`, { auth: true });
-            this.loadContent();
+            // 从草稿数组中删除
+            this.posts = this.posts.filter(p => p.id !== postId);
+            
+            // 保存更新后的草稿
+            const draftData = { posts: this.posts };
+            await api.post(`/draft/${this.currentType}`, draftData, { auth: true });
+            
+            // 同步到正式内容（发布草稿）
+            await api.post(`/draft/${this.currentType}/publish`, {}, { auth: true });
+            
+            // 重新渲染
+            this.render();
+            console.log('✅ 删除成功');
         } catch (error) {
             console.error('删除失败:', error);
             alert('删除失败，请重试');

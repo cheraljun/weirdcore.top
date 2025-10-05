@@ -97,14 +97,11 @@ export class ContentCard {
         
         return `
             <div class="post">
-                <div class="post-info">
-                    <div class="info">
-                        <div class="name">${HtmlHelpers.escapeHtml(post.author || 'Admin')}</div>
-                        <div class="date">${HtmlHelpers.formatDate(post.created_at)}</div>
-                    </div>
-                </div>
                 <div class="post-content">
-                    ${post.title ? `<h3 style="margin: 0 0 10px 0;">${HtmlHelpers.escapeHtml(post.title)}</h3>` : ''}
+                    ${post.title ? `<h3 style="margin: 0 0 var(--content-gap) 0; font-weight: bold;">${HtmlHelpers.escapeHtml(post.title)}</h3>` : ''}
+                    <div class="post-date" style="margin: 0 0 var(--section-gap) 0; color: #666; font-size: 0.86rem;">
+                        📅 ${HtmlHelpers.formatDate(post.created_at)}
+                    </div>
                     ${HtmlHelpers.formatContent(post.content)}
                     ${this.renderImagesSimple()}
                 </div>

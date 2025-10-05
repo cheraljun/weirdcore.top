@@ -14,9 +14,14 @@ window.closeEditor = function() {
     }
 };
 
+// 暴露 contentManager 到全局作用域
+window.contentManager = null;
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     contentManager = new AdminContentPageBase(ADMIN_PAGE_CONFIG);
+    // 同时设置到 window 对象上
+    window.contentManager = contentManager;
 });
 
 export default AdminContentPageBase;

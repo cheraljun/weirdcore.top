@@ -31,7 +31,7 @@ export class EmptyState {
         return new EmptyState({
             icon: '📝',
             title: '暂无内容',
-            message: '内容将通过管理后台添加'
+            message: ''
         });
     }
 

@@ -68,7 +68,7 @@ class AdminDashboard {
 
     async getContentCount(type) {
         try {
-            const response = await fetch(`/api/admin/${type}`, {
+            const response = await fetch(`/api/draft/${type}`, {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
                 }
@@ -76,7 +76,7 @@ class AdminDashboard {
 
             if (response.ok) {
                 const data = await response.json();
-                return data.length;
+                return data.posts ? data.posts.length : 0;
             } else if (response.status === 401) {
                 // Token 过期
                 this.handleLogout();
@@ -103,6 +103,9 @@ class AdminDashboard {
         if (page === 'dashboard') {
             // 刷新仪表板
             window.location.reload();
+        } else if (page === 'announcement') {
+            // 跳转到公告管理页面
+            window.location.href = '/admin/announcement';
         } else if (page === 'chat') {
             alert('聊天记录功能开发中...');
         } else {

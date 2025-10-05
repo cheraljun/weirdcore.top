@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公告管理 - weirdcore store</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 1.43rem;
+            background-color: var(--win98-teal);
+            font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+        }
+
+        .announcement-container {
+            max-width: 50rem;
+            margin: 0 auto;
+            background: var(--win98-gray);
+            border: 2px solid var(--win98-dark-gray);
+            box-shadow: inset -1px -1px var(--win98-dark-gray), inset 1px 1px var(--win98-white);
+        }
+
+        .announcement-header {
+            padding: 1.07rem;
+            background: var(--win98-blue);
+            color: var(--win98-white);
+            font-weight: bold;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .announcement-content {
+            padding: 1.43rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.43rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.57rem;
+            font-weight: bold;
+            font-size: 0.93rem;
+        }
+
+        /* 富文本编辑器 - Word风格 */
+        .rich-editor {
+            border: 2px solid var(--win98-dark-gray);
+            background: var(--win98-white);
+            min-height: 20rem;
+            max-height: 40rem;
+            overflow-y: auto;
+            padding: var(--content-padding);
+            font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+            font-size: 0.86rem;
+            line-height: 1.5;
+            text-align: left;
+            color: var(--win98-black);
+            outline: none;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .rich-editor:focus {
+            border-color: var(--win98-blue);
+        }
+
+        .rich-editor img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: var(--content-gap) 0;
+            border: 1px solid var(--win98-dark-gray);
+            cursor: pointer;
+        }
+
+        .rich-editor img:hover {
+            opacity: 0.8;
+        }
+
+        .rich-editor p {
+            margin: 0 0 var(--content-gap) 0;
+            text-align: left;
+        }
+
+        .editor-hint {
+            font-size: 0.71rem;
+            color: #666;
+            margin-top: 0.57rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.71rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.43rem;
+            font-size: 0.93rem;
+            font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+            font-weight: bold;
+            border: 2px solid var(--win98-dark-gray);
+            box-shadow: inset -1px -1px var(--win98-dark-gray), inset 1px 1px var(--win98-white);
+            background: var(--win98-gray);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--win98-light-gray);
+        }
+
+        .btn:active {
+            box-shadow: inset 1px 1px var(--win98-dark-gray), inset -1px -1px var(--win98-white);
+        }
+
+        .btn-primary {
+            background: var(--win98-blue);
+            color: var(--win98-white);
+        }
+
+        .btn-back {
+            background: var(--win98-gray);
+        }
+
+        .status-message {
+            padding: 0.71rem;
+            margin-bottom: 1.07rem;
+            border: 2px solid var(--win98-dark-gray);
+            background: #ffffe0;
+            display: none;
+            font-size: 0.93rem;
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            display: block;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            display: block;
+        }
+
+        .status-selector {
+            display: flex;
+            gap: 0.71rem;
+            align-items: center;
+        }
+
+        .status-selector label {
+            margin: 0;
+        }
+
+        .status-selector select {
+            padding: 0.36rem 0.71rem;
+            font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+            font-size: 0.86rem;
+            border: 2px solid var(--win98-dark-gray);
+            background: var(--win98-white);
+        }
+
+        /* 拖拽时的视觉反馈 */
+        .rich-editor.drag-over {
+            border-color: var(--win98-blue);
+            background: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="announcement-container">
+        <div class="announcement-header">
+            <span>📢 公告管理</span>
+            <button class="btn btn-back" id="back-btn">返回</button>
+        </div>
+
+        <div class="announcement-content">
+            <div class="status-message" id="status-message"></div>
+
+            <div class="form-group">
+                <label for="rich-editor">公告内容：</label>
+                <div class="editor-hint">
+                    💡 直接输入文字，或拖拽图片到编辑器中（自动转WebP）
+                </div>
+                
+                <div class="rich-editor" id="rich-editor" contenteditable="true">
+                    <!-- 内容将在这里编辑 -->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="status-selector">
+                    <label for="announcement-status">状态：</label>
+                    <select id="announcement-status">
+                        <option value="published">已发布</option>
+                        <option value="draft">草稿</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" id="save-btn">保存公告</button>
+                <button class="btn" id="preview-btn">预览</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/admin/announcement.js"></script>
+</body>
+</html>

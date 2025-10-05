@@ -3,22 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在线联络 - weirdcore store</title>
+    <title>留言 - weirdcore store</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/components.css">
     <link rel="stylesheet" href="/css/chat.css">
 </head>
 <body>
     <div class="chat-wrapper">
-        <!-- 标签栏 -->
-        <div class="chat-tabs-container">
-            <div class="chat-tabs">
-                <div class="chat-tab active" data-lang="en">CHAT</div>
-                <div class="chat-tab" data-lang="zh">聊天</div>
-            </div>
-            <div class="chat-actions">
-                <button class="btn btn-sm" id="logout-btn" style="display: none;">Logout / 注销</button>
-            </div>
+        <!-- 顶部操作栏 -->
+        <div class="chat-header">
+            <button class="btn btn-sm" id="logout-btn" style="display: none;">注销</button>
         </div>
 
         <!-- 主聊天区域 -->
@@ -48,8 +42,8 @@
             <!-- 聊天界面 -->
             <div class="chat-container hidden" id="chat-view">
                 <!-- 状态栏 -->
-                <div class="chat-status online" id="chat-status">
-                    Log in to chat
+                <div class="chat-status" id="chat-status">
+                    请登录以开始聊天
                 </div>
 
                 <!-- 消息区域 -->

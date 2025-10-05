@@ -84,7 +84,7 @@ export class ContentPageBase {
         const emptyState = new EmptyState({
             icon: this.config.emptyIcon || '📝',
             title: this.config.emptyTitle || '暂无内容',
-            message: this.config.emptyMessage || '内容将通过管理后台添加'
+            message: this.config.emptyMessage || ''
         });
         this.container.innerHTML = emptyState.render();
     }

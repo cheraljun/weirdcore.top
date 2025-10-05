@@ -6,14 +6,32 @@
     <title>研究 - weirdcore store</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/research.css">
+    <style>
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--win98-white);
+        }
+        #posts-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+    </style>
 </head>
 <body>
-    <div style="text-align: center; padding: 20px 0; border-bottom: 2px solid #000;">
-        <h1 style="font-size: 2em; margin: 0;">研究</h1>
-        <p style="margin: 10px 0 0 0; color: #666;">探索与思考</p>
+    <div style="padding: 12px; border-bottom: 2px solid var(--win98-dark-gray); background: var(--win98-gray);">
+        <h1 style="font-size: 16px; margin: 0; font-weight: bold;">研究</h1>
+        <p style="margin: 6px 0 0 0; font-size: 13px;">探索与思考</p>
     </div>
 
-    <div id="posts-container" style="padding: 20px;">
+    <div id="posts-container">
         <!-- 研究文章将通过JS动态加载 -->
     </div>
 

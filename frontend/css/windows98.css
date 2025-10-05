@@ -2,34 +2,45 @@
 
 .win98-window {
     position: fixed;
-    background-color: var(--white);
-    border: 2px solid var(--darkbrown);
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    background-color: var(--win98-gray);
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-black);
+    border-bottom: 2px solid var(--win98-black);
+    box-shadow: none;
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
 .win98-window.win98-active {
-    border-color: var(--darkbrown);
+    /* 激活窗口样式 */
 }
 
 .win98-titlebar {
-    background-color: var(--darkbrown);
-    color: var(--white);
-    padding: 4px 6px;
+    background: var(--win98-blue);
+    color: var(--win98-white);
+    padding: 0.14rem 0.21rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: move;
     user-select: none;
-    border-bottom: 2px solid var(--darkbrown);
+    border: none;
+    min-height: 1.3rem;
+}
+
+.win98-window:not(.win98-active) .win98-titlebar {
+    background: var(--win98-dark-gray);
+    color: var(--win98-white);
 }
 
 .win98-title {
     font-weight: bold;
-    font-size: 14px;
-    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 0.93rem;
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+    letter-spacing: 0;
+    text-shadow: none;
 }
 
 .win98-controls {
@@ -38,13 +49,16 @@
 }
 
 .win98-btn {
-    width: 24px;
-    height: 20px;
-    border: 1px solid var(--white);
-    background-color: var(--white);
-    color: var(--darkbrown);
-    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
-    font-size: 14px;
+    min-width: 1.3rem;
+    min-height: 1.14rem;
+    border-top: 1px solid var(--win98-white);
+    border-left: 1px solid var(--win98-white);
+    border-right: 1px solid var(--win98-black);
+    border-bottom: 1px solid var(--win98-black);
+    background-color: var(--win98-gray);
+    color: var(--win98-black);
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+    font-size: 0.86rem;
     font-weight: bold;
     cursor: pointer;
     display: flex;
@@ -52,129 +66,193 @@
     justify-content: center;
     padding: 0;
     line-height: 1;
-    -webkit-transition: 0.1s;
-    transition: 0.1s;
+    -webkit-transition: none;
+    transition: none;
 }
 
 .win98-btn:hover {
-    background-color: #ddd;
+    background-color: var(--win98-light-gray);
 }
 
 .win98-btn:active {
-    border-style: inset;
-    background-color: #ccc;
-}
-
-.win98-close {
-    background-color: #c00;
-    color: var(--white);
-    border-color: #c00;
-}
-
-.win98-close:hover {
-    background-color: #d00;
+    border-top: 1px solid var(--win98-black);
+    border-left: 1px solid var(--win98-black);
+    border-right: 1px solid var(--win98-white);
+    border-bottom: 1px solid var(--win98-white);
 }
 
 .win98-content {
     flex: 1;
-    overflow: auto;
-    padding: 10px;
-    background-color: var(--white);
-    position: relative;
+    background-color: var(--win98-white);
+    overflow: hidden;
+    padding: 0;
 }
 
-.win98-content::-webkit-scrollbar {
-    width: 16px;
-    height: 16px;
-}
-
-.win98-content::-webkit-scrollbar-track {
-    background-color: #ddd;
-}
-
-.win98-content::-webkit-scrollbar-thumb {
-    background-color: var(--darkbrown);
-    border: 2px solid #ddd;
-}
-
-.win98-content::-webkit-scrollbar-corner {
-    background-color: #ddd;
-}
-
-.win98-resize-handle {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 16px;
-    height: 16px;
-    cursor: nwse-resize;
-    background: linear-gradient(135deg, 
-        transparent 0%, 
-        transparent 40%, 
-        var(--darkbrown) 40%, 
-        var(--darkbrown) 45%, 
-        transparent 45%, 
-        transparent 50%,
-        var(--darkbrown) 50%, 
-        var(--darkbrown) 55%, 
-        transparent 55%,
-        transparent 60%,
-        var(--darkbrown) 60%, 
-        var(--darkbrown) 65%, 
-        transparent 65%
-    );
-}
-
-/* 窗口内容样式保持一致 */
 .win98-content iframe {
     width: 100%;
     height: 100%;
     border: none;
-    background-color: var(--white);
+    display: block;
 }
 
-.win98-content .page-content {
-    height: 100%;
-    overflow-y: auto;
+/* 窗口调整大小手柄 */
+.win98-resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 1.07rem;
+    height: 1.07rem;
+    cursor: nwse-resize;
+    z-index: 10;
+    background: linear-gradient(135deg, 
+        transparent 0%, 
+        transparent 45%, 
+        var(--win98-dark-gray) 45%, 
+        var(--win98-dark-gray) 50%, 
+        transparent 50%, 
+        transparent 55%,
+        var(--win98-dark-gray) 55%,
+        var(--win98-dark-gray) 60%,
+        transparent 60%,
+        transparent 65%,
+        var(--win98-dark-gray) 65%,
+        var(--win98-dark-gray) 70%,
+        transparent 70%
+    );
 }
 
-/* 任务栏样式（显示最小化的窗口） */
+.win98-resize-handle:hover {
+    background: linear-gradient(135deg, 
+        transparent 0%, 
+        transparent 45%, 
+        var(--win98-black) 45%, 
+        var(--win98-black) 50%, 
+        transparent 50%, 
+        transparent 55%,
+        var(--win98-black) 55%,
+        var(--win98-black) 60%,
+        transparent 60%,
+        transparent 65%,
+        var(--win98-black) 65%,
+        var(--win98-black) 70%,
+        transparent 70%
+    );
+}
+
+/* 任务栏样式 */
 .win98-taskbar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 40px;
-    background-color: var(--darkbrown);
-    border-top: 2px solid var(--white);
+    height: 2.14rem;
+    background-color: var(--win98-gray);
+    border-top: 2px solid var(--win98-white);
     display: flex;
     align-items: center;
-    padding: 0 10px;
-    gap: 5px;
-    z-index: 9999;
+    padding: 0.14rem 0.29rem;
+    z-index: 10000;
+    gap: 0.29rem;
+}
+
+.win98-start-btn {
+    height: 1.71rem;
+    padding: 0.14rem 0.71rem;
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-black);
+    border-bottom: 2px solid var(--win98-black);
+    background-color: var(--win98-gray);
+    font-weight: bold;
+    font-size: 0.93rem;
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.29rem;
+    -webkit-transition: none;
+    transition: none;
+}
+
+.win98-start-btn:hover {
+    background-color: var(--win98-light-gray);
+}
+
+.win98-start-btn:active {
+    border-top: 2px solid var(--win98-black);
+    border-left: 2px solid var(--win98-black);
+    border-right: 2px solid var(--win98-white);
+    border-bottom: 2px solid var(--win98-white);
+}
+
+.win98-taskbar-windows {
+    flex: 1;
+    display: flex;
+    gap: 0.29rem;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .win98-taskbar-btn {
-    background-color: var(--white);
-    color: var(--darkbrown);
-    border: 2px solid var(--darkbrown);
-    padding: 5px 10px;
+    min-width: 11.43rem;
+    max-width: 14.29rem;
+    height: 1.71rem;
+    padding: 0.14rem 0.57rem;
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-black);
+    border-bottom: 2px solid var(--win98-black);
+    background-color: var(--win98-gray);
+    font-size: 0.93rem;
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
     cursor: pointer;
-    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
-    font-size: 12px;
-    max-width: 150px;
+    text-align: left;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    -webkit-transition: none;
+    transition: none;
 }
 
 .win98-taskbar-btn:hover {
-    background-color: #e0e0e0;
+    background-color: var(--win98-light-gray);
 }
 
 .win98-taskbar-btn.active {
-    background-color: var(--darkbrown);
-    color: var(--white);
-    border-color: var(--white);
+    border-top: 2px solid var(--win98-black);
+    border-left: 2px solid var(--win98-black);
+    border-right: 2px solid var(--win98-white);
+    border-bottom: 2px solid var(--win98-white);
 }
 
+.win98-system-tray {
+    height: 1.71rem;
+    padding: 0.14rem 0.57rem;
+    border-top: 1px solid var(--win98-dark-gray);
+    border-left: 1px solid var(--win98-dark-gray);
+    border-right: 1px solid var(--win98-white);
+    border-bottom: 1px solid var(--win98-white);
+    background-color: var(--win98-gray);
+    display: flex;
+    align-items: center;
+    gap: 0.57rem;
+    font-size: 0.93rem;
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+}
+
+.win98-clock {
+    font-size: 0.93rem;
+}
+
+/* Z-index管理 */
+.win98-window {
+    z-index: 100;
+}
+
+.win98-window.win98-active {
+    z-index: 1000;
+}
+
+.win98-taskbar {
+    z-index: 10000;
+}

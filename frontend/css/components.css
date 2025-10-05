@@ -1,94 +1,110 @@
-/* 可复用的组件样式 */
+/* 可复用的组件样式 - Windows 98 风格 */
 
 /* ========== 按钮组件 ========== */
 .btn {
-    padding: 8px 20px;
-    border: 2px solid var(--darkbrown);
-    background-color: var(--white);
-    color: var(--darkbrown);
-    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
+    padding: 0.4rem 1rem;
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-black);
+    border-bottom: 2px solid var(--win98-black);
+    background-color: var(--win98-gray);
+    color: var(--win98-black);
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+    font-size: 0.93rem;
+    font-weight: normal;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: none;
     text-align: center;
     display: inline-block;
+    outline: 1px solid transparent;
+    outline-offset: -3px;
 }
 
 .btn:hover {
-    background-color: var(--darkbrown);
-    color: var(--white);
+    background-color: var(--win98-light-gray);
 }
 
 .btn:active {
-    border-style: inset;
+    border-top: 2px solid var(--win98-black);
+    border-left: 2px solid var(--win98-black);
+    border-right: 2px solid var(--win98-white);
+    border-bottom: 2px solid var(--win98-white);
+}
+
+.btn:focus {
+    outline: 1px dotted var(--win98-black);
+    outline-offset: -3px;
 }
 
 .btn-primary {
-    background-color: var(--darkbrown);
-    color: var(--white);
+    border: 2px solid var(--win98-black);
+    outline: 1px dotted var(--win98-black);
+    outline-offset: -4px;
 }
 
 .btn-primary:hover {
-    background-color: #000;
+    background-color: var(--win98-light-gray);
 }
 
 .btn-sm {
-    padding: 4px 12px;
-    font-size: 12px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.86rem;
 }
 
 /* ========== 输入框组件 ========== */
 .input {
-    padding: 8px 10px;
-    border: 2px solid var(--darkbrown);
-    background-color: var(--white);
-    color: var(--darkbrown);
-    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
-    font-size: 14px;
+    padding: 0.3rem 0.4rem;
+    border-top: 2px solid var(--win98-dark-gray);
+    border-left: 2px solid var(--win98-dark-gray);
+    border-right: 2px solid var(--win98-white);
+    border-bottom: 2px solid var(--win98-white);
+    background-color: var(--win98-white);
+    color: var(--win98-black);
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+    font-size: 0.93rem;
     width: 100%;
     box-sizing: border-box;
 }
 
 .input:focus {
     outline: none;
-    border-color: #000;
-    background-color: #fff;
 }
 
 .input::placeholder {
-    color: #999;
+    color: var(--win98-dark-gray);
 }
 
 /* ========== 标签页组件 ========== */
 .tabs {
     display: flex;
-    border-bottom: 2px solid var(--darkbrown);
-    background-color: var(--white);
+    border-bottom: 2px solid var(--win98-gray);
+    background-color: var(--win98-gray);
 }
 
 .tab {
-    padding: 8px 20px;
-    border: 2px solid var(--darkbrown);
+    padding: 0.4rem 1rem;
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-dark-gray);
     border-bottom: none;
-    background-color: #ddd;
-    color: var(--darkbrown);
+    background-color: var(--win98-gray);
+    color: var(--win98-black);
     cursor: pointer;
-    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    margin-right: -2px;
-    transition: all 0.2s;
+    font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+    font-size: 0.93rem;
+    font-weight: normal;
+    margin-right: 2px;
+    transition: none;
     user-select: none;
 }
 
 .tab:hover {
-    background-color: #ccc;
+    background-color: var(--win98-light-gray);
 }
 
 .tab.active {
-    background-color: var(--white);
-    border-bottom: 2px solid var(--white);
+    background-color: var(--win98-white);
+    border-bottom: 2px solid var(--win98-white);
     margin-bottom: -2px;
     position: relative;
     z-index: 1;
@@ -97,63 +113,69 @@
 /* ========== 页面头部组件 ========== */
 .page-header {
     text-align: center;
-    padding: 20px 0;
-    border-bottom: 2px solid var(--darkbrown);
-    background-color: var(--white);
+    padding: 0.86rem 0;
+    border-bottom: 2px solid var(--win98-dark-gray);
+    background-color: var(--win98-gray);
 }
 
 .page-header h1 {
-    font-size: 2em;
+    font-size: 1.14rem;
     margin: 0;
+    font-weight: bold;
 }
 
 .page-header p {
-    margin: 10px 0 0 0;
-    color: #666;
+    margin: 0.57rem 0 0 0;
+    color: var(--win98-black);
+    font-size: 0.93rem;
 }
 
 /* ========== 容器组件 ========== */
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0.7rem;
 }
 
 .box {
-    border: 2px solid var(--darkbrown);
-    background-color: var(--white);
-    padding: 15px;
-    margin-bottom: 10px;
+    border-top: 2px solid var(--win98-white);
+    border-left: 2px solid var(--win98-white);
+    border-right: 2px solid var(--win98-dark-gray);
+    border-bottom: 2px solid var(--win98-dark-gray);
+    background-color: var(--win98-gray);
+    padding: 2px;
+    margin-bottom: 0.7rem;
 }
 
 .box-header {
-    padding: 10px;
-    border-bottom: 2px solid var(--darkbrown);
-    background-color: var(--darkbrown);
-    color: var(--white);
+    padding: 0.3rem 0.57rem;
+    border: none;
+    background: var(--win98-blue);
+    color: var(--win98-white);
     font-weight: bold;
-    font-size: 14px;
+    font-size: 0.93rem;
 }
 
 .box-content {
-    padding: 15px;
+    padding: 0.57rem;
+    background-color: var(--win98-white);
 }
 
 /* ========== 表单组件 ========== */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 0.86rem;
 }
 
 .form-label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 14px;
+    margin-bottom: 0.3rem;
+    font-weight: normal;
+    font-size: 0.93rem;
 }
 
 .form-row {
     display: flex;
-    gap: 10px;
+    gap: 0.57rem;
     align-items: center;
 }
 
@@ -167,15 +189,15 @@
 }
 
 .mt-10 {
-    margin-top: 10px;
+    margin-top: 0.7rem;
 }
 
 .mb-10 {
-    margin-bottom: 10px;
+    margin-bottom: 0.7rem;
 }
 
 .p-10 {
-    padding: 10px;
+    padding: 0.7rem;
 }
 
 .flex {
@@ -191,7 +213,7 @@
 }
 
 .gap-10 {
-    gap: 10px;
+    gap: 0.7rem;
 }
 
 .hidden {

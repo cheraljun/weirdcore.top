@@ -57,7 +57,7 @@
     border: none;
     background-color: #c00;
     color: white;
-    font-size: 18px;
+    font-size: 1.29rem;
     font-weight: bold;
     cursor: pointer;
     border-radius: 50%;
@@ -99,6 +99,6 @@
 .progress-text {
     text-align: center;
     margin-top: 8px;
-    font-size: 12px;
+    font-size: 0.86rem;
     color: #666;
 }
