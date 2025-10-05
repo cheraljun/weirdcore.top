@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容管理 - weirdcore store</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/uploader.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--white);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            width: 250px;
+            background-color: var(--darkbrown);
+            color: var(--white);
+            border-right: 2px solid #000;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .sidebar-header h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left-color: var(--white);
+        }
+
+        /* 主内容区 */
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--darkbrown);
+        }
+
+        .content-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* 内容列表 */
+        .content-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .content-item {
+            border: 2px solid var(--darkbrown);
+            padding: 20px;
+            background-color: var(--white);
+            transition: all 0.2s;
+        }
+
+        .content-item:hover {
+            box-shadow: 4px 4px 0px var(--darkbrown);
+            transform: translate(-2px, -2px);
+        }
+
+        .content-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .content-item-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .content-item-meta {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .content-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .content-item-text {
+            margin: 10px 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 编辑器 */
+        .editor-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .editor-overlay.show {
+            display: flex;
+        }
+
+        .editor-container {
+            background-color: var(--white);
+            border: 2px solid var(--darkbrown);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .editor-header {
+            padding: 15px 20px;
+            border-bottom: 2px solid var(--darkbrown);
+            background-color: var(--darkbrown);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .editor-body {
+            padding: 30px;
+        }
+
+        .editor-footer {
+            padding: 15px 20px;
+            border-top: 2px solid var(--darkbrown);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background-color: #f5f5f5;
+        }
+
+        textarea.content-textarea {
+            min-height: 200px;
+            resize: vertical;
+            font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state p {
+            margin: 10px 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .error-message {
+            padding: 15px;
+            background-color: #f8d7da;
+            border: 2px solid #c00;
+            color: #721c24;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>内容管理</h1>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-item" data-page="dashboard" onclick="window.location.href='/admin'">
+                    📊 返回仪表板
+                </div>
+                <div class="menu-item active" data-type="research">
+                    📝 研究文章
+                </div>
+                <div class="menu-item" data-type="media">
+                    🎬 媒体内容
+                </div>
+                <div class="menu-item" data-type="activity">
+                    📅 活动记录
+                </div>
+                <div class="menu-item" data-type="shop">
+                    🛒 商店商品
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <div class="content-header">
+                <div>
+                    <h2 id="page-title">研究文章管理</h2>
+                    <p id="page-subtitle" style="margin: 5px 0 0 0; color: #666; font-size: 14px;">
+                        管理您的研究文章内容
+                    </p>
+                </div>
+                <button class="btn btn-primary" id="add-btn">+ 新建内容</button>
+            </div>
+
+            <div id="error-container"></div>
+            <div id="loading" class="loading" style="display: none;">加载中...</div>
+            <div id="content-list" class="content-list"></div>
+        </main>
+    </div>
+
+    <!-- 编辑器弹窗 -->
+    <div class="editor-overlay" id="editor-overlay">
+        <div class="editor-container">
+            <div class="editor-header">
+                <h3 id="editor-title">新建内容</h3>
+                <button class="btn btn-sm" onclick="closeEditor()" style="background: transparent; border: 1px solid white; color: white;">
+                    ✕ 关闭
+                </button>
+            </div>
+            <div class="editor-body">
+                <form id="content-form">
+                    <input type="hidden" id="post-id">
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="post-title">标题（可选）</label>
+                        <input type="text" class="input" id="post-title" placeholder="输入标题">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="post-content">内容 *</label>
+                        <textarea class="input content-textarea" id="post-content" 
+                                  placeholder="输入内容，支持纯文本和链接（链接会自动识别）" 
+                                  required></textarea>
+                        <small style="color: #666; font-size: 12px;">
+                            提示：直接输入 http:// 或 https:// 开头的链接会自动转换为可点击的超链接
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">图片</label>
+                        <div id="image-uploader-container"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">状态</label>
+                        <select class="input" id="post-status">
+                            <option value="published">已发布</option>
+                            <option value="draft">草稿</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="editor-footer">
+                <button class="btn" onclick="closeEditor()">取消</button>
+                <button class="btn btn-primary" id="save-btn">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/admin/content-new.js"></script>
+</body>
+</html>

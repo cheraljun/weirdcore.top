@@ -21,12 +21,8 @@
             <div class="nav-link">
                 <a href="#" class="link" data-window="research">研究</a>
             </div>
-            <div class="nav-link" style="--dropdown-height: 42px;">
-                <a class="dropdown">媒体</a>
-                <div class="dropdown-menu">
-                    <a href="#" class="dropdown-link" data-window="films" style="border-top: none;">电影</a>
-                    <a href="#" class="dropdown-link" data-window="music" style="border-bottom: none;">音乐</a>
-                </div>
+            <div class="nav-link">
+                <a href="#" class="link" data-window="media">媒体</a>
             </div>
             <div class="nav-link">
                 <a href="#" class="link" data-window="activity">活动</a>
@@ -123,8 +119,7 @@
         function openWindow(type) {
             const titles = {
                 'research': '研究',
-                'films': '电影',
-                'music': '音乐',
+                'media': '媒体',
                 'activity': '活动',
                 'shop': '商店',
                 'chat': '在线联络'
@@ -132,8 +127,7 @@
 
             const urls = {
                 'research': '/pages/research.html',
-                'films': '/pages/films.html',
-                'music': '/pages/music.html',
+                'media': '/pages/media.html',
                 'activity': '/pages/activity.html',
                 'shop': '/pages/shop.html',
                 'chat': '/pages/chat.html'

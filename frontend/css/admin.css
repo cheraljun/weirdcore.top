@@ -1,0 +1,98 @@
+/* 管理后台专用样式 */
+
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.empty-state p {
+    margin: 10px 0;
+}
+
+/* 加载状态 */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+/* 错误消息 */
+.error-message {
+    padding: 15px;
+    background-color: #f8d7da;
+    border: 2px solid #c00;
+    color: #721c24;
+    margin-bottom: 20px;
+}
+
+/* 内容卡片 */
+.content-item {
+    border: 2px solid var(--darkbrown);
+    padding: 20px;
+    background-color: var(--white);
+    transition: all 0.2s;
+    margin-bottom: 15px;
+}
+
+.content-item:hover {
+    box-shadow: 4px 4px 0px var(--darkbrown);
+    transform: translate(-2px, -2px);
+}
+
+.content-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.content-item-meta {
+    font-size: 12px;
+    color: #666;
+}
+
+.content-item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.content-item-body {
+    line-height: 1.6;
+}
+
+.content-item-title {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 0 10px 0;
+}
+
+.content-item-text {
+    color: #333;
+}
+
+/* 内容图片 */
+.content-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.content-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid var(--darkbrown);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.content-image:hover {
+    opacity: 0.8;
+}
+
+.content-image[src] {
+    opacity: 1;
+}

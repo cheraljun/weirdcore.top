@@ -1,0 +1,199 @@
+/* 可复用的组件样式 */
+
+/* ========== 按钮组件 ========== */
+.btn {
+    padding: 8px 20px;
+    border: 2px solid var(--darkbrown);
+    background-color: var(--white);
+    color: var(--darkbrown);
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: var(--darkbrown);
+    color: var(--white);
+}
+
+.btn:active {
+    border-style: inset;
+}
+
+.btn-primary {
+    background-color: var(--darkbrown);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: #000;
+}
+
+.btn-sm {
+    padding: 4px 12px;
+    font-size: 12px;
+}
+
+/* ========== 输入框组件 ========== */
+.input {
+    padding: 8px 10px;
+    border: 2px solid var(--darkbrown);
+    background-color: var(--white);
+    color: var(--darkbrown);
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #000;
+    background-color: #fff;
+}
+
+.input::placeholder {
+    color: #999;
+}
+
+/* ========== 标签页组件 ========== */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid var(--darkbrown);
+    background-color: var(--white);
+}
+
+.tab {
+    padding: 8px 20px;
+    border: 2px solid var(--darkbrown);
+    border-bottom: none;
+    background-color: #ddd;
+    color: var(--darkbrown);
+    cursor: pointer;
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: -2px;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.tab:hover {
+    background-color: #ccc;
+}
+
+.tab.active {
+    background-color: var(--white);
+    border-bottom: 2px solid var(--white);
+    margin-bottom: -2px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========== 页面头部组件 ========== */
+.page-header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 2px solid var(--darkbrown);
+    background-color: var(--white);
+}
+
+.page-header h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+.page-header p {
+    margin: 10px 0 0 0;
+    color: #666;
+}
+
+/* ========== 容器组件 ========== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.box {
+    border: 2px solid var(--darkbrown);
+    background-color: var(--white);
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.box-header {
+    padding: 10px;
+    border-bottom: 2px solid var(--darkbrown);
+    background-color: var(--darkbrown);
+    color: var(--white);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.box-content {
+    padding: 15px;
+}
+
+/* ========== 表单组件 ========== */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* ========== 工具类 ========== */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.hidden {
+    display: none !important;
+}

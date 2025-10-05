@@ -1,0 +1,11 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "password"
+  },
+  "jwt": {
+    "secret_key": "weirdcore-secret-key-change-in-production",
+    "algorithm": "HS256",
+    "access_token_expire_minutes": 1440
+  }
+}

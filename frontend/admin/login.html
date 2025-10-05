@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员登录 - weirdcore store</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--white);
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .login-container {
+            border: 2px solid var(--darkbrown);
+            background-color: var(--white);
+            padding: 40px 30px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--darkbrown);
+        }
+
+        .login-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .login-header p {
+            margin: 10px 0 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .error-message {
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 2px solid #c00;
+            color: #721c24;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            padding: 10px;
+            background-color: #d4edda;
+            border: 2px solid #0c0;
+            color: #155724;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>管理员登录</h1>
+                <p>weirdcore store Admin</p>
+            </div>
+
+            <div id="error-message" class="error-message"></div>
+            <div id="success-message" class="success-message"></div>
+
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="username">用户名</label>
+                    <input 
+                        type="text" 
+                        class="input" 
+                        id="username" 
+                        name="username"
+                        placeholder="请输入用户名"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">密码</label>
+                    <input 
+                        type="password" 
+                        class="input" 
+                        id="password" 
+                        name="password"
+                        placeholder="请输入密码"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="login-btn">
+                    登录
+                </button>
+
+                <div style="text-align: center; font-size: 12px; color: #666; margin-top: 10px;">
+                    <a href="/" style="color: var(--darkbrown);">返回首页</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="/js/admin/login.js"></script>
+</body>
+</html>

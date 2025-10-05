@@ -1,0 +1,17 @@
+{
+  "posts": [
+    {
+      "id": "c90cda67-907b-4bf4-969b-2bde59d1120c",
+      "type": "research",
+      "created_at": "2025-10-05T05:46:19.594488",
+      "updated_at": "2025-10-05T05:46:19.594488",
+      "title": "AI CODING",
+      "content": "这个网站是用cursor写的。哈哈。",
+      "images": [
+        "/media/images/7174a9e52ef44175872dc55166cfeb03.webp"
+      ],
+      "links": [],
+      "status": "published"
+    }
+  ]
+}

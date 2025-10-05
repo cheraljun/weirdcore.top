@@ -1,0 +1,261 @@
+/* 聊天页面特定样式 */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+    overflow: hidden;
+}
+
+/* ========== 聊天容器 ========== */
+.chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+/* ========== 标签栏 ========== */
+.chat-tabs-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--darkbrown);
+    background-color: var(--white);
+}
+
+.chat-tabs {
+    display: flex;
+}
+
+.chat-tab {
+    padding: 10px 25px;
+    border-right: 2px solid var(--darkbrown);
+    background-color: #ddd;
+    color: var(--darkbrown);
+    cursor: pointer;
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.chat-tab:first-child {
+    border-left: none;
+}
+
+.chat-tab:hover {
+    background-color: #ccc;
+}
+
+.chat-tab.active {
+    background-color: var(--white);
+}
+
+/* ========== 顶部操作栏 ========== */
+.chat-actions {
+    padding: 8px 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* ========== 主聊天区域 ========== */
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ========== 登录界面 ========== */
+.login-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.login-box {
+    border: 2px solid var(--darkbrown);
+    background-color: var(--white);
+    padding: 30px;
+    min-width: 350px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-input {
+    padding: 10px;
+    border: 2px solid var(--darkbrown);
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    background-color: var(--white);
+}
+
+.login-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.login-help {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* ========== 聊天界面 ========== */
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ========== 消息区域 ========== */
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background-color: var(--white);
+    border-top: 2px solid var(--darkbrown);
+}
+
+.message {
+    margin-bottom: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.message-time {
+    color: #666;
+    margin-right: 5px;
+}
+
+.message-user {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* 不同用户的颜色 */
+.message-user.color-1 { color: #0066cc; }
+.message-user.color-2 { color: #cc0066; }
+.message-user.color-3 { color: #009933; }
+.message-user.color-4 { color: #cc6600; }
+.message-user.color-5 { color: #9900cc; }
+.message-user.color-6 { color: #006666; }
+
+.message-text {
+    color: var(--darkbrown);
+}
+
+.message-system {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+}
+
+/* ========== 输入区域 ========== */
+.input-container {
+    border-top: 2px solid var(--darkbrown);
+    background-color: var(--white);
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-hint {
+    font-size: 12px;
+    color: #666;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted var(--darkbrown);
+    margin-bottom: 10px;
+}
+
+.message-input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid var(--darkbrown);
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    background-color: var(--white);
+    resize: none;
+}
+
+.message-input::placeholder {
+    color: #999;
+}
+
+.send-btn {
+    padding: 10px 30px;
+    border: 2px solid var(--darkbrown);
+    background-color: var(--darkbrown);
+    color: var(--white);
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.send-btn:hover {
+    background-color: #000;
+}
+
+.send-btn:active {
+    border-style: inset;
+}
+
+/* ========== 滚动条样式 ========== */
+.messages-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+    background-color: #ddd;
+    border-left: 2px solid var(--darkbrown);
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+    background-color: var(--darkbrown);
+    border: 2px solid #ddd;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+    background-color: #000;
+}
+
+/* ========== 提示信息 ========== */
+.chat-status {
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border-bottom: 2px solid var(--darkbrown);
+    font-size: 13px;
+    text-align: center;
+}
+
+.chat-status.online {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.chat-status.offline {
+    background-color: #f8d7da;
+    color: #721c24;
+}
