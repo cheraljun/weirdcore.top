@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weirdcore store</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/windows98.css">
+</head>
+<body>
+    <div style="text-align: center; padding: 20px 0; border-bottom: 2px solid #000;">
+        <h1 style="font-size: 2em; margin: 0;">weirdcore store</h1>
+    </div>
+    
+    <div class="header">
+        <div class="left-header">
+            <span style="font-weight: bold;">weirdcore store</span> ----------→ <span style="cursor: pointer;">♕</span>
+        </div>
+        <div class="right-header">
+            <div class="nav-link">
+                <a href="#" class="link" data-window="research">研究</a>
+            </div>
+            <div class="nav-link" style="--dropdown-height: 42px;">
+                <a class="dropdown">媒体</a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-link" data-window="films" style="border-top: none;">电影</a>
+                    <a href="#" class="dropdown-link" data-window="music" style="border-bottom: none;">音乐</a>
+                </div>
+            </div>
+            <div class="nav-link">
+                <a href="#" class="link" data-window="activity">活动</a>
+            </div>
+            <div class="nav-link">
+                <a href="#" class="link" data-window="shop">商店</a>
+            </div>
+            <div class="nav-link">
+                <a href="#" class="link" data-window="chat">在线联络</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- 左侧边栏 -->
+        <div class="left">
+            <!-- 当前日期 -->
+            <div id="datetime-display" style="background: var(--white); padding: 15px; text-align: left; border-bottom: 1px dotted var(--darkbrown);">
+                <div id="current-date" style="font-size: 16px; font-weight: bold; margin-bottom: 8px;"></div>
+                <div id="current-weekday" style="font-size: 14px; color: #666;"></div>
+            </div>
+
+            <!-- 联系方式 -->
+            <div class="button">
+                <div class="link-me">联系我：</div>
+                <div style="text-align: center; padding: 10px 5px;">
+                    <a href="mailto:1773384983@qq.com" style="text-decoration: none; word-break: break-all;">1773384983@qq.com</a>
+                </div>
+            </div>
+
+            <!-- Neighbors -->
+            <div class="neighbors">
+                <div class="neighbors-title">友情链接</div>
+                <div class="neighbors-buttons" id="neighbors-buttons">
+                    <div style="padding: 10px; border-bottom: 1px dotted var(--darkbrown);">
+                        <a href="http://vocabulary.top" target="_blank" style="font-weight: bold; display: block; margin-bottom: 5px;">vocabulary.top</a>
+                        <div style="font-size: 12px; color: #666;">最好的单词记忆小站</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧内容区 -->
+        <div class="right">
+            <div class="main-content">
+                <div class="welcome">
+                    <p><strong>欢迎来到 weirdcore store！</strong></p>
+                    <p>这是一个记录生活、分享想法和兴趣的个人博客。</p>
+                </div>
+                <div class="updates">
+                    <!-- 更新内容将通过JS动态加载 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/components/window-manager.js"></script>
+    <script type="module" src="/js/main.js"></script>
+    
+    <!-- 当前日期脚本 -->
+    <script>
+        function updateDate() {
+            const now = new Date();
+            
+            // 格式化日期：2025年10月5日
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const date = now.getDate();
+            document.getElementById('current-date').textContent = `${year}年${month}月${date}日`;
+            
+            // 星期几
+            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            document.getElementById('current-weekday').textContent = weekdays[now.getDay()];
+        }
+        
+        // 页面加载后立即显示
+        updateDate();
+    </script>
+    
+    <script type="module">
+        // 窗口打开逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('[data-window]');
+            
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const windowType = link.getAttribute('data-window');
+                    openWindow(windowType);
+                });
+            });
+        });
+
+        function openWindow(type) {
+            const titles = {
+                'research': '研究',
+                'films': '电影',
+                'music': '音乐',
+                'activity': '活动',
+                'shop': '商店',
+                'chat': '在线联络'
+            };
+
+            const urls = {
+                'research': '/pages/research.html',
+                'films': '/pages/films.html',
+                'music': '/pages/music.html',
+                'activity': '/pages/activity.html',
+                'shop': '/pages/shop.html',
+                'chat': '/pages/chat.html'
+            };
+
+            const title = titles[type] || '窗口';
+            const url = urls[type] || '/';
+            
+            const content = `<iframe src="${url}" style="width:100%; height:100%; border:none;"></iframe>`;
+            
+            window.windowManager.createWindow(title, content, {
+                width: 800,
+                height: 600
+            });
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,99 @@
+/* 电影页面样式 */
+html {
+    background-color: var(--white);
+}
+
+body {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--darkbrown);
+    text-decoration: 1px dotted underline var(--darkbrown);
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+a:hover {
+    opacity: 75%;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.header {
+    margin-top: -2px;
+    display: flex;
+    width: 100%;
+    border-bottom: 1px dotted var(--darkbrown);
+    background-color: var(--white);
+}
+
+.header a:hover {
+    letter-spacing: 1px;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.left-header {
+    box-sizing: border-box;
+    min-width: 180px;
+    padding: 5px 10px;
+    border-right: 1px dotted var(--darkbrown);
+    flex-shrink: 0;
+}
+
+.right-header {
+    box-sizing: border-box;
+    text-align: right;
+    padding: 5px 10px;
+    flex: 1;
+}
+
+.film {
+    display: flex;
+    border-bottom: 1px dotted var(--darkbrown);
+}
+
+.left {
+    border-right: 1px dotted var(--darkbrown);
+    text-align: center;
+    min-width: 180px;
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.info {
+    padding: 5px 10px;
+    text-align: left;
+    display: block;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.right {
+    text-align: justify;
+    padding: 10px;
+    flex: 1;
+    overflow-wrap: break-word;
+}
+
+.frame {
+    text-align: center;
+    z-index: 2;
+    box-sizing: border-box;
+    max-height: 371px;
+}
+
+.frame img {
+    max-width: 100%;
+    height: auto;
+}
+

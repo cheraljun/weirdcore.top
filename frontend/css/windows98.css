@@ -1,0 +1,180 @@
+/* Windows 98 风格窗口样式 */
+
+.win98-window {
+    position: fixed;
+    background-color: var(--white);
+    border: 2px solid var(--darkbrown);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.win98-window.win98-active {
+    border-color: var(--darkbrown);
+}
+
+.win98-titlebar {
+    background-color: var(--darkbrown);
+    color: var(--white);
+    padding: 4px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    user-select: none;
+    border-bottom: 2px solid var(--darkbrown);
+}
+
+.win98-title {
+    font-weight: bold;
+    font-size: 14px;
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+}
+
+.win98-controls {
+    display: flex;
+    gap: 2px;
+}
+
+.win98-btn {
+    width: 24px;
+    height: 20px;
+    border: 1px solid var(--white);
+    background-color: var(--white);
+    color: var(--darkbrown);
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
+}
+
+.win98-btn:hover {
+    background-color: #ddd;
+}
+
+.win98-btn:active {
+    border-style: inset;
+    background-color: #ccc;
+}
+
+.win98-close {
+    background-color: #c00;
+    color: var(--white);
+    border-color: #c00;
+}
+
+.win98-close:hover {
+    background-color: #d00;
+}
+
+.win98-content {
+    flex: 1;
+    overflow: auto;
+    padding: 10px;
+    background-color: var(--white);
+    position: relative;
+}
+
+.win98-content::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+.win98-content::-webkit-scrollbar-track {
+    background-color: #ddd;
+}
+
+.win98-content::-webkit-scrollbar-thumb {
+    background-color: var(--darkbrown);
+    border: 2px solid #ddd;
+}
+
+.win98-content::-webkit-scrollbar-corner {
+    background-color: #ddd;
+}
+
+.win98-resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nwse-resize;
+    background: linear-gradient(135deg, 
+        transparent 0%, 
+        transparent 40%, 
+        var(--darkbrown) 40%, 
+        var(--darkbrown) 45%, 
+        transparent 45%, 
+        transparent 50%,
+        var(--darkbrown) 50%, 
+        var(--darkbrown) 55%, 
+        transparent 55%,
+        transparent 60%,
+        var(--darkbrown) 60%, 
+        var(--darkbrown) 65%, 
+        transparent 65%
+    );
+}
+
+/* 窗口内容样式保持一致 */
+.win98-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: var(--white);
+}
+
+.win98-content .page-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* 任务栏样式（显示最小化的窗口） */
+.win98-taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: var(--darkbrown);
+    border-top: 2px solid var(--white);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 5px;
+    z-index: 9999;
+}
+
+.win98-taskbar-btn {
+    background-color: var(--white);
+    color: var(--darkbrown);
+    border: 2px solid var(--darkbrown);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: 'MS UI Gothic', 'Microsoft YaHei', sans-serif;
+    font-size: 12px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.win98-taskbar-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.win98-taskbar-btn.active {
+    background-color: var(--darkbrown);
+    color: var(--white);
+    border-color: var(--white);
+}
+

@@ -1,0 +1,113 @@
+/* 研究页面样式 */
+body {
+    padding: 15px;
+    display: block;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--darkbrown);
+    text-decoration: 1px dotted underline;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+a:hover {
+    opacity: 70%;
+    letter-spacing: 1px;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.header {
+    z-index: 2;
+    border-bottom: 1px dotted var(--darkbrown);
+    background-color: var(--white);
+    position: sticky;
+    top: 0px;
+    margin-top: -2px;
+    display: flex;
+    width: 100%;
+}
+
+.left-header {
+    border-right: 1px dotted var(--darkbrown);
+    padding: 5px 10px;
+    min-width: 140px;
+    flex-shrink: 0;
+}
+
+.right-header {
+    padding: 5px 10px;
+    text-align: right;
+    flex: 1;
+}
+
+.post {
+    border-bottom: 1px dotted var(--darkbrown);
+    display: flex;
+}
+
+.post a:hover {
+    letter-spacing: 0px;
+}
+
+.post-info {
+    min-width: 140px;
+    width: 140px;
+    display: flex;
+    border-right: 1px dotted var(--darkbrown);
+    flex-shrink: 0;
+}
+
+.info {
+    padding: 5px;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.post-content {
+    text-align: justify;
+    flex: 1;
+    padding: 5px 10px;
+    overflow-wrap: break-word;
+}
+
+.post-img {
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.post-content img {
+    opacity: 0%;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+    max-width: 100%;
+}
+
+.post-content img:hover {
+    opacity: 100%;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.censor {
+    background-color: var(--darkbrown);
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.censor:hover {
+    background-color: var(--white);
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+

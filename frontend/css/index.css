@@ -1,0 +1,390 @@
+/* 首页样式 */
+div {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.header {
+    background-color: var(--white);
+    display: flex;
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.left {
+    border-right: 1px dotted var(--darkbrown);
+    width: 181px;
+}
+
+.left-header {
+    width: 181px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-bottom: 1px dotted var(--darkbrown);
+    border-right: 1px dotted var(--darkbrown);
+}
+
+.left-header a:hover {
+    opacity: 70%;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.button {
+    padding: 10px;
+    border-bottom: 1px dotted var(--darkbrown);
+}
+
+.link-me {
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.feel-free {
+    padding-top: 5px;
+}
+
+.neighbors {
+    border-bottom: 1px dotted var(--darkbrown);
+}
+
+.neighbors-title {
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 1px dotted var(--darkbrown);
+}
+
+.neighbors-buttons {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 299px;
+    min-height: 299px;
+    padding-top: 2px;
+}
+
+.neighbors-buttons::-webkit-scrollbar {
+    width: 0px;
+}
+
+.neighbors-buttons a {
+    text-decoration: none;
+}
+
+.neighbors-buttons img {
+    filter: brightness(75%) sepia(1) hue-rotate(-34deg) saturate(76.3%) brightness(154.3%);
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.neighbors-buttons img:hover {
+    filter: none;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.right {
+    flex: 1;
+    max-width: 900px;
+    margin-right: 20px;
+}
+
+.right-header {
+    flex: 1;
+    display: flex;
+    position: sticky;
+    top: 0px;
+}
+
+.right-header .nav-link {
+    border-right: 1px dotted var(--darkbrown);
+    border-bottom: 1px dotted var(--darkbrown);
+    color: var(--darkbrown);
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.right-header .nav-link:hover {
+    cursor: pointer;
+    color: var(--white);
+    background-color: var(--darkbrown);
+    border: 1px dotted var(--white);
+    border-top: none;
+    border-left: none;
+}
+
+.dropdown:hover {
+    cursor: default;
+    letter-spacing: 1px;
+    color: var(--white);
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.nav-link:hover a.link {
+    color: var(--white);
+    letter-spacing: 1px;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.nav-link {
+    position: relative;
+}
+
+.nav-link a {
+    color: var(--darkbrown);
+    text-decoration: none;
+    display: block;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.dropdown-menu {
+    background-color: var(--white);
+    opacity: 0%;
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    width: 89.58px;
+    overflow: hidden;
+    height: 0;
+    transition: height 0.25s ease-out, opacity 0.25s ease-out;
+    border: 1px dotted var(--darkbrown);
+}
+
+.dropdown-menu a.dropdown-link {
+    box-sizing: border-box;
+    color: var(--darkbrown);
+    height: 21px;
+    width: 89.58px;
+    border-bottom: 1px dotted var(--darkbrown);
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+a.dropdown-link:hover {
+    letter-spacing: 1px;
+    color: var(--white);
+    background-color: var(--darkbrown);
+    border-bottom: 1px dotted var(--white);
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.nav-link:hover .dropdown-menu {
+    opacity: 100%;
+    height: var(--dropdown-height);
+}
+
+.dropdown:hover,
+.nav-link:hover .dropdown,
+.dropdown-menu:hover ~ .dropdown {
+    color: var(--white);
+    background-color: var(--darkbrown);
+    letter-spacing: 1px;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.main-content {
+    padding: 15px 20px;
+}
+
+.welcome {
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+.updates iframe {
+    box-sizing: border-box;
+    border: none;
+    width: 100%;
+    height: 206px;
+    margin-bottom: -2px;
+}
+
+.main-content-right {
+    border-left: 1px dotted var(--darkbrown);
+    width: 177px;
+}
+
+.name-header {
+    font-weight: bold;
+    text-align: center;
+    padding: 3px;
+}
+
+.about-desc {
+    border-bottom: 1px dotted var(--darkbrown);
+    padding: 3px;
+    text-align: center;
+}
+
+#statuscafe-username {
+    color: var(--white);
+    background-color: var(--darkbrown);
+    padding: 3px;
+}
+
+#statuscafe-username a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: 1px dotted underline;
+}
+
+#statuscafe-content {
+    background-color: var(--white);
+    border-bottom: 1px dotted var(--darkbrown);
+    padding: 5px;
+}
+
+.about-statuses-title {
+    padding: 3px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px dotted var(--darkbrown);
+}
+
+.about-status {
+    padding: 5px;
+}
+
+.featured-image {
+    overflow: hidden;
+    border-top: 1px dotted var(--darkbrown);
+    width: 177px;
+    height: 177px;
+}
+
+.featured-image img {
+    opacity: 0%;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.featured-image img:hover {
+    opacity: 100%;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.featured-image a {
+    text-decoration: none;
+}
+
+.footer {
+    border-top: 1px dotted var(--darkbrown);
+    display: flex;
+    width: 100%;
+}
+
+.footer-left, .footer-middle, .footer-right {
+    padding: 3px;
+}
+
+.footer-left {
+    padding-left: 0px;
+    width: 180px;
+}
+
+.footer a {
+    color: var(--darkbrown);
+    text-decoration: 1px dotted underline;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.footer a:hover {
+    letter-spacing: 1px;
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.footer-middle {
+    text-align: center;
+    width: 443px;
+    border-left: 1px dotted var(--darkbrown);
+}
+
+.footer-right {
+    padding: 3px;
+    width: 176px;
+    border-left: 1px dotted var(--darkbrown);
+    padding-right: 0px;
+}
+
+/* 聊天室样式 */
+.chat-container {
+    border: 2px solid var(--darkbrown);
+    background: var(--white);
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 5px 10px;
+    border-bottom: 2px solid var(--darkbrown);
+    background: var(--white);
+}
+
+.login-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background: var(--white);
+    border-bottom: 1px solid var(--darkbrown);
+}
+
+.chat-input-container {
+    border-top: 1px solid var(--darkbrown);
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: var(--white);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--darkbrown);
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #000;
+}
+
