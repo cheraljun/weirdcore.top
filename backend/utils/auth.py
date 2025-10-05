@@ -3,7 +3,7 @@ JWT 认证工具
 """
 import json
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Optional, Dict
 from jose import JWTError, jwt
 from pathlib import Path
 
@@ -21,7 +21,7 @@ def verify_admin(username: str, password: str) -> bool:
     admin = config.get('admin', {})
     return username == admin.get('username') and password == admin.get('password')
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
+def create_access_token(data: Dict, expires_delta: Optional[timedelta] = None) -> str:
     """创建 JWT token"""
     config = load_config()
     jwt_config = config.get('jwt', {})
@@ -40,7 +40,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     )
     return encoded_jwt
 
-def verify_token(token: str) -> Optional[dict]:
+def verify_token(token: str) -> Optional[Dict]:
     """验证 JWT token"""
     try:
         config = load_config()
