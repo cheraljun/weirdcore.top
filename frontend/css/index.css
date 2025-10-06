@@ -289,10 +289,17 @@ body {
     display: block;
     object-fit: contain;
     transition: transform 0.1s;
+    image-rendering: -webkit-optimize-contrast; /* 优化图标渲染 */
+    image-rendering: crisp-edges;
 }
 
 .right-header .nav-link:hover .nav-icon {
     transform: scale(1.05);
+}
+
+/* GIF 动画图标特殊样式 */
+.nav-icon.animated-icon {
+    image-rendering: auto; /* GIF 使用默认渲染以保持动画流畅 */
 }
 
 /* 搜索框容器（在左侧栏） */

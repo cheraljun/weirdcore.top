@@ -166,8 +166,14 @@
     </script>
     
     <script type="module">
+        // 导入导航图标加载器
+        import { initNavIcons } from '/js/utils/navIconLoader.js';
+        
         // 窗口打开逻辑
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 初始化导航图标（支持GIF和PNG）
+            await initNavIcons();
+            
             const links = document.querySelectorAll('[data-window]');
             
             links.forEach(link => {

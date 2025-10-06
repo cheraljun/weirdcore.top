@@ -65,3 +65,35 @@ export const ADMIN_PAGE_CONFIG = {
         }
     }
 };
+
+/**
+ * 导航图标配置
+ * 支持多种格式，优先级：gif > png
+ */
+export const NAV_ICON_CONFIG = {
+    research: {
+        name: 'nav-research',
+        alt: '研究',
+        formats: ['gif', 'png']
+    },
+    media: {
+        name: 'nav-media',
+        alt: '媒体',
+        formats: ['gif', 'png']
+    },
+    activity: {
+        name: 'nav-activity',
+        alt: '活动',
+        formats: ['gif', 'png']
+    },
+    shop: {
+        name: 'nav-shop',
+        alt: '商店',
+        formats: ['gif', 'png']
+    },
+    chat: {
+        name: 'nav-chat',
+        alt: '留言',
+        formats: ['gif', 'png']
+    }
+};
